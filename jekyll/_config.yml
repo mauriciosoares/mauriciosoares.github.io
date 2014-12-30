@@ -1,0 +1,14 @@
+name: Mauricio Soares
+description: Front End Developer
+meta_description: "Mauricio Soares, Front End Developer"
+
+markdown: redcarpet
+highlighter: pygments
+logo: false
+paginate: 15
+baseurl: /blog/
+domain_name: 'http://mauriciosoares.co/blog'
+
+# Details for the RSS feed generator
+url:            'http://mauriciosoares.co/blog'
+author:         'Mauricio Soares'
