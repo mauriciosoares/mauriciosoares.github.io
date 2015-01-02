@@ -58,7 +58,7 @@
         <!-- <h1 class="post-title">Bind crossbrowser</h1> -->
 
         <section class="post-content">
-            <p>Em um dos posts anteriores falamos sobre o <a href="http://blog.herebecoders.com/js-bind-em-callbacks/">bind</a>, e quão útil ele pode ser em nossa aplicação... Mas infelizmente o <code>bind</code> é uma feature do Ecmascript 5, e sua compatibilidade com o IE é a partir do 9 (e todos sabemos que o cliente sempre quer apps que funcionem no IE 8 e muitas vezes no IE 7).</p>
+            <p>Em um dos posts anteriores falamos sobre o <a href="http://mauriciosoares.co/blog/javascript/2015/01/02/bind-em-callbacks.html">bind</a>, e quão útil ele pode ser em nossa aplicação... Mas infelizmente o <code>bind</code> é uma feature do Ecmascript 5, e sua compatibilidade com o IE é a partir do 9 (e todos sabemos que o cliente sempre quer apps que funcionem no IE 8 e muitas vezes no IE 7).</p>
 
 <p>Contudo, existe uma maneira bem simples de implementa-lo em ambientes antigos (isso é uma técnica chamada <strong>polyfill</strong>), que com ela nosso bind funcionará da mesma maneira que deveria funcionar (e com pouquíssimas linhas de código).</p>
 
@@ -80,18 +80,18 @@
 
 <p>1 - Antes de mais nada precisamos saber se o método bind existe. Não queremos substituir a versão nativa caso nosso ambiente dê suporte ao Ecmascript, o intuito do polyfill é somente implementar a feature se ela não tiver implementada nativamente.</p>
 
-<p>2 - Em <code>Function.prototype.bind</code>, que no caso seria o constructor de todas as functions, receberemos uma função com argumentos... (Se precisar refrescar a memória sobre como funciona o prototype, acesse <a href="http://blog.herebecoders.com/js-prototypes/">aqui</a>). E recebemos um parâmetro que seria o novo <code>this</code> que será chamado no seu callback.</p>
+<p>2 - Em <code>Function.prototype.bind</code>, que no caso seria o constructor de todas as functions, receberemos uma função com argumentos... (Se precisar refrescar a memória sobre como funciona o prototype, acesse <a href="http://mauriciosoares.co/blog/javascript/2015/01/02/prototypes.html">aqui</a>). E recebemos um parâmetro que seria o novo <code>this</code> que será chamado no seu callback.</p>
 
 <p>3 - Declaramos algumas variáveis
 <code>slice</code>, é apenas um <strong>alias</strong> para o <code>Array.prototype.slice</code>, já que o usaremos mais de uma vez sempre é bom cachearmos seu acesso em algo mais simples de ler.</p>
 
-<p><code>args</code>, Nós usamos o <code>slice</code> declarado acima, assim recebemos todos os items de <code>arguments</code> como um Array, e tiramos o primeiro argumento, que já esta no parâmetro <code>newThis</code> de nossa função. Se não souber o porque de <code>arguments</code>, você pode dar uma lida <a href="http://blog.herebecoders.com/js-dicas-sobre-javascript/">aqui</a></p>
+<p><code>args</code>, Nós usamos o <code>slice</code> declarado acima, assim recebemos todos os items de <code>arguments</code> como um Array, e tiramos o primeiro argumento, que já esta no parâmetro <code>newThis</code> de nossa função. Se não souber o porque de <code>arguments</code>, você pode dar uma lida <a href="http://mauriciosoares.co/blog/javascript/2015/01/02/dicas-sobre-javascript.html">aqui</a></p>
 
 <p><code>fn</code>, recebemos a função em sí que está sendo chamado o <code>bind</code>. Nesse caso <code>this</code> aponta para a própria função que estamos usando o <code>bind</code>.</p>
 
 <p>4 - Em seguida retornamos uma função, pois nosso callback espera o escopo de uma função, e não uma função já executada.</p>
 
-<p>5 - E finalmente usamos o <a href="http://blog.herebecoders.com/js-como-funciona-o-call-e-o-apply/">apply</a>, para executarmos nossa função com o this que nós passamos como parâmetro no bind (<code>newThis</code>). Em seguida fazemos uma pequena mutreta, passamos nossos <code>args</code> como parâmetros que receberemos no nosso callback, e concatenamos <code>arguments</code> novamente, pois o callback pode querer passar parâmetros também a sua função que você esta usando.</p>
+<p>5 - E finalmente usamos o <a href="http://mauriciosoares.co/blog/javascript/2015/01/02/como-funciona-o-call-e-o-apply.html">apply</a>, para executarmos nossa função com o this que nós passamos como parâmetro no bind (<code>newThis</code>). Em seguida fazemos uma pequena mutreta, passamos nossos <code>args</code> como parâmetros que receberemos no nosso callback, e concatenamos <code>arguments</code> novamente, pois o callback pode querer passar parâmetros também a sua função que você esta usando.</p>
 
 <p>O bind é algo extremamente útil, que com certeza me ajuda muito em meu dia a dia, e seu polyfill é tão útil quanto.</p>
 
@@ -136,7 +136,21 @@
 </section>
 
             <!-- Disqus comments -->
-            
+            <section class="disqus">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+
+        var disqus_shortname = 'mauriciosoaresco';
+        var disqus_developer = 0; // developer mode is on
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
 
         </footer>
 

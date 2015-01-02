@@ -58,7 +58,7 @@
         <!-- <h1 class="post-title">Método extend</h1> -->
 
         <section class="post-content">
-            <p>A alguns posts atras, nós falamos que objetos são <a href="http://blog.herebecoders.com/js-objetos-por-referencia/">passados por referência</a>, e descobrimos que quando atribuimos um objeto a outra variável, ele é somente uma referência deste primeiro objeto, e tudo que for alterado no primeiro, será alterado no segundo também.</p>
+            <p>A alguns posts atras, nós falamos que objetos são <a href="http://mauriciosoares.co/blog/javascript/2015/01/02/objetos-por-referencia.html">passados por referência</a>, e descobrimos que quando atribuimos um objeto a outra variável, ele é somente uma referência deste primeiro objeto, e tudo que for alterado no primeiro, será alterado no segundo também.</p>
 
 <p>Resolvemos este problema usando <code>Object.create</code>, que cria uma cópia e não uma referência do primeiro objeto, vamos ver um exemplo:</p>
 
@@ -220,7 +220,21 @@
 </section>
 
             <!-- Disqus comments -->
-            
+            <section class="disqus">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+
+        var disqus_shortname = 'mauriciosoaresco';
+        var disqus_developer = 0; // developer mode is on
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
 
         </footer>
 

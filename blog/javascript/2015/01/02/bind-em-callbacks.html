@@ -58,7 +58,7 @@
         <!-- <h1 class="post-title">Bind em callbacks</h1> -->
 
         <section class="post-content">
-            <p>Recentemente falamos sobre o <a href="http://blog.herebecoders.com/js-this-em-funcoes-e-construtores/">this</a>, de forma bem simples expliquei como esse objeto funciona, mas existe uma situação em que o <code>this</code> pode não se comportar da forma que você espera.</p>
+            <p>Recentemente falamos sobre o <a href="http://mauriciosoares.co/blog/javascript/2015/01/02/this-em-funcoes-e-construtores.html">this</a>, de forma bem simples expliquei como esse objeto funciona, mas existe uma situação em que o <code>this</code> pode não se comportar da forma que você espera.</p>
 
 <p>Antes de mais nada, precisamos entender um conceito da linguagem Javascript chamado de <code>callback</code>, que consiste em ser uma função que vai ser chamada assim que determinada ação é executada, por exemplo:</p>
 
@@ -143,7 +143,7 @@
 
 <p>E finalmente (antes tarde do que nunca), podemos usar o <code>bind</code>!</p>
 
-<p>O <code>bind</code> funciona de forma semelhante ao <a href="http://blog.herebecoders.com/js-como-funciona-o-call-e-o-apply/">call e o apply</a>, alterando o valor de <code>this</code> dentro de alguma função, mas ao invés de executar a função na hora em que o usamos, como faz o <code>call</code> e o <code>apply</code>, ele espera que a função em que o colocamos como callback o faça, como por exemplo:</p>
+<p>O <code>bind</code> funciona de forma semelhante ao <a href="http://mauriciosoares.co/blog/javascript/2015/01/02/como-funciona-o-call-e-o-apply.html">call e o apply</a>, alterando o valor de <code>this</code> dentro de alguma função, mas ao invés de executar a função na hora em que o usamos, como faz o <code>call</code> e o <code>apply</code>, ele espera que a função em que o colocamos como callback o faça, como por exemplo:</p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{};</span>
 <span class="nx">obj</span><span class="p">.</span><span class="nx">meuMetodo</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
@@ -237,7 +237,21 @@
 </section>
 
             <!-- Disqus comments -->
-            
+            <section class="disqus">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+
+        var disqus_shortname = 'mauriciosoaresco';
+        var disqus_developer = 0; // developer mode is on
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
 
         </footer>
 
