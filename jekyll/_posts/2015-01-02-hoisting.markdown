@@ -19,7 +19,7 @@ function teste() {
 }
 {% endhighlight %}
 
-Nós executamos a função `teste` sem nem ao menos ela existir antes disso... Isso é causado por conta do Hoisting, que pega as funções e as coloca no começo de sua [closure](http://blog.herebecoders.com/js-closures-e-suas-utilidades/).
+Nós executamos a função `teste` sem nem ao menos ela existir antes disso... Isso é causado por conta do Hoisting, que pega as funções e as coloca no começo de sua [closure](http://mauriciosoares.co/blog/javascript/2015/01/02/closures-e-suas-utilidades.html).
 
 Nota, isso só funciona dessa forma nas funções, e não quando atribuimos uma função a uma variável:
 

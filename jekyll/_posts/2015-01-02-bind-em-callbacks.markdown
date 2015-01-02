@@ -5,7 +5,7 @@ date:   2015-01-02 13:00:00
 categories: Javascript
 ---
 
-Recentemente falamos sobre o [this](http://blog.herebecoders.com/js-this-em-funcoes-e-construtores/), de forma bem simples expliquei como esse objeto funciona, mas existe uma situação em que o `this` pode não se comportar da forma que você espera.
+Recentemente falamos sobre o [this](http://mauriciosoares.co/blog/javascript/2015/01/02/this-em-funcoes-e-construtores.html), de forma bem simples expliquei como esse objeto funciona, mas existe uma situação em que o `this` pode não se comportar da forma que você espera.
 
 Antes de mais nada, precisamos entender um conceito da linguagem Javascript chamado de `callback`, que consiste em ser uma função que vai ser chamada assim que determinada ação é executada, por exemplo:
 
@@ -100,7 +100,7 @@ Funciona muito bem assim, mas temos uma variável declarada desnecessariamente, 
 
 E finalmente (antes tarde do que nunca), podemos usar o `bind`!
 
-O `bind` funciona de forma semelhante ao [call e o apply](http://blog.herebecoders.com/js-como-funciona-o-call-e-o-apply/), alterando o valor de `this` dentro de alguma função, mas ao invés de executar a função na hora em que o usamos, como faz o `call` e o `apply`, ele espera que a função em que o colocamos como callback o faça, como por exemplo:
+O `bind` funciona de forma semelhante ao [call e o apply](http://mauriciosoares.co/blog/javascript/2015/01/02/como-funciona-o-call-e-o-apply.html), alterando o valor de `this` dentro de alguma função, mas ao invés de executar a função na hora em que o usamos, como faz o `call` e o `apply`, ele espera que a função em que o colocamos como callback o faça, como por exemplo:
 
 {% highlight javascript %}
 var obj = {};

@@ -44,9 +44,9 @@ var mixin = function() { //1
 };
 {% endhighlight %}
 
-Antes de mais nada, funções tem uma variável que é automáticamente gerada chamada `arguments`, você pode ler umpouco sobre isso no primeiro item [desse post](http://blog.herebecoders.com/js-dicas-sobre-javascript/).
+Antes de mais nada, funções tem uma variável que é automáticamente gerada chamada `arguments`, você pode ler umpouco sobre isso no primeiro item [desse post](http://mauriciosoares.co/blog/javascript/2015/01/02/dicas-sobre-javascript.html).
 
-Ele funciona de forma semelhante ao método [extend](http://blog.herebecoders.com/js-metodo-extend/).
+Ele funciona de forma semelhante ao método [extend](http://mauriciosoares.co/blog/javascript/2015/01/02/metodo-extend.html).
 
 1 - Criamos uma função sem os parâmetros definidos, pois eles podem ser um número desconhecido.
 
@@ -80,4 +80,4 @@ mixed.indice1; // false
 mixed.indice2; // true
 {% endhighlight %}
 
-Nota que essa técnica passa os objetos [por referência](http://blog.herebecoders.com/js-objetos-por-referencia/).
+Nota que essa técnica passa os objetos [por referência](http://mauriciosoares.co/blog/javascript/2015/01/02/objetos-por-referencia.html).

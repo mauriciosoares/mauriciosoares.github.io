@@ -68,7 +68,7 @@ Empregado.prototype.novoMetodo = function() {}
 
 Certo, atribuimos ao prototype de `Empregado` todos os métodos de `Pessoa`, mas por que usamos `Object.create`?
 
-Como eu expliquei em um post anterior, os [objetos são passados por referência](http://blog.herebecoders.com/js-objetos-por-referencia/), se simplesmente fizessemos isso `Empregado.prototype = Pessoa.prototype`, quando criamos `novoMetodo` em `Empregado`, automaticamente `Pessoa` também teria recebido esse método, e não é isso que queremos.
+Como eu expliquei em um post anterior, os [objetos são passados por referência](http://mauriciosoares.co/blog/javascript/2015/01/02/objetos-por-referencia.html), se simplesmente fizessemos isso `Empregado.prototype = Pessoa.prototype`, quando criamos `novoMetodo` em `Empregado`, automaticamente `Pessoa` também teria recebido esse método, e não é isso que queremos.
 
 Já estamos bem evoluidos com nossas heranças, vamos ver o comportamento por enquanto:
 

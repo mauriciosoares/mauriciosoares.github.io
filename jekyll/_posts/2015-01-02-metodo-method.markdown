@@ -5,7 +5,7 @@ date:   2015-01-02 16:00:00
 categories: Javascript
 ---
 
-Como falamos [anteriormente](http://blog.herebecoders.com/js-prototypes/), `prototypes` são usados para declararmos metodos e propriedades reutilizáveis em todas as instancias de uma função construtora no Javascript, a sintaxe é a seguinte:
+Como falamos [anteriormente](http://mauriciosoares.co/blog/javascript/2015/01/02/prototypes.html), `prototypes` são usados para declararmos metodos e propriedades reutilizáveis em todas as instancias de uma função construtora no Javascript, a sintaxe é a seguinte:
 
 {% highlight javascript %}
 var Person = function(name) {

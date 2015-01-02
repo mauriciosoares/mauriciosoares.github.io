@@ -136,9 +136,9 @@ Agora precisamos fazer uma maneira de pegar o callback tanto de 1 requisição, 
 
 Primeiro criaremos um array com as promises de cada callback que quisermos usar... esse array será alimentado com alguma regra de negócio da sua aplicação...
 
-Depois usaremos o [apply](http://blog.herebecoders.com/js-como-funciona-o-call-e-o-apply/) para chamar o método `$.when`, para termos quantas requisições forem necessárias
+Depois usaremos o [apply](http://mauriciosoares.co/blog/javascript/2015/01/02/como-funciona-o-call-e-o-apply.html) para chamar o método `$.when`, para termos quantas requisições forem necessárias
 
-E no callback de `$.when` usaremos a variável [arguments](http://blog.herebecoders.com/js-dicas-sobre-javascript/) para pegarmos o retorno de cada callback.
+E no callback de `$.when` usaremos a variável [arguments](http://mauriciosoares.co/blog/javascript/2015/01/02/dicas-sobre-javascript.html) para pegarmos o retorno de cada callback.
 
 Como ficaria então um código com essa implementação
 

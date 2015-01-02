@@ -5,7 +5,7 @@ date:   2015-01-02 15:00:00
 categories: Javascript
 ---
 
-Falamos no [post anterior](http://blog.herebecoders.com/js-grunt-baby-steps-parte-1/) sobre como instalarmos o Grunt em nossa máquina, agora que passamos por todo aquele processo vamos agora configura-lo e coloca-lo em ação!
+Falamos no [post anterior](http://mauriciosoares.co/blog/javascript/2015/01/02/grunt-baby-steps-parte-1.html) sobre como instalarmos o Grunt em nossa máquina, agora que passamos por todo aquele processo vamos agora configura-lo e coloca-lo em ação!
 
 ### Instalando tasks
 

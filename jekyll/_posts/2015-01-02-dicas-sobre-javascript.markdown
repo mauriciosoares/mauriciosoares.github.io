@@ -65,7 +65,7 @@ No Ecmascript 3 existiam alguams features que não eram muito bem compreendidas,
 
 Simplesmente use a string `'use strict'` dentro do seu código, tudo abaixo dela será estrito.
 
-Mas se declararmos o `'use strict'` dentro de uma [closure](http://blog.herebecoders.com/js-closures-e-suas-utilidades/), somente sua closure estará estrita, e nao o que está fora dela, exemplo:
+Mas se declararmos o `'use strict'` dentro de uma [closure](http://mauriciosoares.co/blog/javascript/2015/01/02/closures-e-suas-utilidades.html), somente sua closure estará estrita, e nao o que está fora dela, exemplo:
 
 {% highlight javascript %}
 // codigo não estrito

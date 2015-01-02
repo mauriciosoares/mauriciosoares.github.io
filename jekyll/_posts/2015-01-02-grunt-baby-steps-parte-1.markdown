@@ -61,4 +61,4 @@ npm install grunt --save-dev
 
 Dessa forma o modulo do Grunt é instalado, e estamos prontos para instalar nossas tasks, e configurar nosso arquivo que vai rodar essas tasks!
 
-Continue esse tutorial [nesse post](http://blog.herebecoders.com/js-grunt-baby-steps-parte-2/)
+Continue esse tutorial [nesse post](http://mauriciosoares.co/blog/javascript/2015/01/02/grunt-baby-steps-parte-2.html)

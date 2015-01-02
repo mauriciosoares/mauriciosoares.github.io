@@ -5,7 +5,7 @@ date:   2015-01-02 17:00:00
 categories: Javascript
 ---
 
-A alguns posts atras, nós falamos que objetos são [passados por referência](http://blog.herebecoders.com/js-objetos-por-referencia/), e descobrimos que quando atribuimos um objeto a outra variável, ele é somente uma referência deste primeiro objeto, e tudo que for alterado no primeiro, será alterado no segundo também.
+A alguns posts atras, nós falamos que objetos são [passados por referência](http://mauriciosoares.co/blog/javascript/2015/01/02/objetos-por-referencia.html), e descobrimos que quando atribuimos um objeto a outra variável, ele é somente uma referência deste primeiro objeto, e tudo que for alterado no primeiro, será alterado no segundo também.
 
 Resolvemos este problema usando `Object.create`, que cria uma cópia e não uma referência do primeiro objeto, vamos ver um exemplo:
 
