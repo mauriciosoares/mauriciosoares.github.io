@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Mauricio Soares - Front End Developer</title>
+    <meta name="description" content="Mauricio Soares, Front End Developer" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/main.css" />
+
+</head>
+<body class="post-template">
+
+    <header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="/blog/">Home</a>
+        <a class="subscribe-button icon-feed" href="/blog/rss.xml">Subscribe</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">O Escopo Global</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-01-01">01 Jan 2015</time>
+                
+                    on javascript
+                
+            </section>
+        </header>
+
+<!--         <header class="post-header">
+            <a id="blog-logo" href="http://mauriciosoares.co/blog">
+                
+                    <span class="blog-title">Mauricio Soares</span>
+                
+            </a>
+        </header> -->
+
+        <!-- <span class="post-meta">
+            <time datetime="2015-01-01">01 Jan 2015</time>
+            
+                on javascript
+            
+        </span> -->
+
+        <!-- <h1 class="post-title">O Escopo Global</h1> -->
+
+        <section class="post-content">
+            <p>Todas as variáveis que você define no javascript que estão fora de funções são chamadas de variaveis globais, pelo fato de elas terem sido declaradas no <strong>Escopo Global</strong>.</p>
+
+<p>É bem simples declarar uma variável no escopo global, como muitos de vocês devem saber, é só fazer o seguinte:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">minhaGlobal</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span></code></pre></div>
+
+<p>O fato de sua variável ter sido de clarada no escopo global faz com que ela seja acessível em todo canto de sua aplicação.</p>
+
+<h2>Como acessar variaveis do escopo global?</h2>
+
+<p>Para acessar uma variavel você pode simplesmente usar o nome da variavel:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">minhaGlobal</span><span class="p">;</span> <span class="c1">// true</span></code></pre></div>
+
+<p>ou usar o objeto <code>window</code>:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">window</span><span class="p">.</span><span class="nx">minhaGlobal</span><span class="p">;</span> <span class="c1">// true</span></code></pre></div>
+
+<h2>O objeto <strong>Window</strong></h2>
+
+<p><code>window</code> pode ser usado para acessar todas as variáveis que estão no escopo global (e também muitos objetos úteis como o <code>document</code>, que iremos falar em outro post).</p>
+
+<p>Variáveis (ou outros objetos) no escopo de <code>window</code> podem ser acessados somente usando o próprio nome criado, como no tópico anterior, quando usamos <code>minhaGlobal</code> sem usar o <code>window</code>.</p>
+
+<p>Outra maneira de criar variáveis globais seriam atribuindo ao próprio objeto window:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">window</span><span class="p">.</span><span class="nx">minhaOutraGlobal</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span></code></pre></div>
+
+<p>Dessa maneira a variávei <code>minhaOutraGlobal</code> pode ser também acessada de qualquer canto de sua aplicação.</p>
+
+<h2>Por que é uma má prática atribuir variaveis ao escopo global?</h2>
+
+<p>Como eu disse acima, variáveis globais podem ser acessadas de qualquer canto de sua aplicação, isso pode parecer bom, mas é pior do que parece...</p>
+
+<p>O fato de sua variável ser acessada por toda aplicação pode implicar em erros inesperados, como por exemplo uma library parar de funcionar (como o jQuery).</p>
+
+<p>Para quem conhece o jQuery, sabemos que ele pode ser usado através da variável <code>$</code> ou <code>jQuery</code>, imaginemos que por algum motivo você precise usar essa variavel para armazenar algum valor...</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">jQuery</span> <span class="o">=</span> <span class="s1">&#39;Hello, variables&#39;</span><span class="p">;</span></code></pre></div>
+
+<p>Dessa forma, o jQuery pararia de funcionar sem vestígios, e isso pode render um bom tempo debugando o código para descobrir o que aconteceu.</p>
+
+<h2>Como evitar variaveis globais?</h2>
+
+<p>Existem algumas técnicas para podermos evitar variáveis no escopo global, 2 delas das quais falarei nos próximos posts são usando <strong>Namespaces</strong>, e <strong>Closures</strong>.</p>
+
+        </section>
+
+        
+
+        <footer class="post-footer">
+            <!-- If we want to display author's name and bio -->
+            
+                <figure class="author-image">
+                    <a class="img" href="/blog/" style="background-image: url(/blog/assets/images/profile.png)">
+                    <span class="hidden">Mauricio Soares's Picture</span></a>
+                </figure>
+                <section class="author">
+                    <!-- Author Name -->
+                    <h4> Mauricio Soares </h4>
+                    <!-- Author Bio -->
+                    <p>
+                        Here goes the author description. You might want to place some links too in here
+                    </p>
+                </section>
+            
+
+            <!-- Share links section -->
+            <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=O Escopo Global&amp;url=http://mauriciosoares.co/blog/javascript/2015/01/01/o-escopo-global.html"
+        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://mauriciosoares.co/blog/javascript/2015/01/01/o-escopo-global.html"
+        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://mauriciosoares.co/blog/javascript/2015/01/01/o-escopo-global.html"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+            <!-- Disqus comments -->
+            
+
+        </footer>
+
+    </article>
+
+</main>
+
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="/blog/">Mauricio Soares</a> &copy;
+               &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll using
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
+
+    <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+</body>
+</html>

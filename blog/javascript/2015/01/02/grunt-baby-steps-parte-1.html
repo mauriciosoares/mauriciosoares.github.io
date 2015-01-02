@@ -31,11 +31,11 @@
     <article class="post">
 
         <header class="post-header">
-            <h1 class="post-title">Welcome to Jekyll!</h1>
+            <h1 class="post-title">Grunt, baby steps, parte 1</h1>
             <section class="post-meta">
-                <time class="post-date" datetime="2013-11-10">10 Nov 2013</time>
+                <time class="post-date" datetime="2015-01-02">02 Jan 2015</time>
                 
-                    on thriller, comedy, and horror
+                    on javascript
                 
             </section>
         </header>
@@ -49,27 +49,71 @@
         </header> -->
 
         <!-- <span class="post-meta">
-            <time datetime="2013-11-10">10 Nov 2013</time>
+            <time datetime="2015-01-02">02 Jan 2015</time>
             
-                on thriller, comedy, and horror
+                on javascript
             
         </span> -->
 
-        <!-- <h1 class="post-title">Welcome to Jekyll!</h1> -->
+        <!-- <h1 class="post-title">Grunt, baby steps, parte 1</h1> -->
 
         <section class="post-content">
-            <p>You&#39;ll find this post in your <code>_posts</code> directory - edit this post and re-build (or run with the <code>-w</code> switch) to see your changes!
-To add new posts, simply add a file in the <code>_posts</code> directory that follows the convention: YYYY-MM-DD-name-of-post.ext.</p>
+            <p>Antes de mais nada, infelizmente terei que deixar usuários de Windows um pouco na mão nesse post, esse post é destinado mais para usuários de Linux/Mac, pois vai involver o Terminal. Mas tentarei deixar referências para pelo menos guia-los como fazer os procedimentos no Windows. Sempre que eu involver o <strong>terminal</strong>, no Windows será equivalente ao <strong>CMD</strong>.</p>
 
-<p>Jekyll also offers powerful support for code snippets:</p>
+<p>Separei este tutorial em 2 posts, pois ele vai ficar meio extenso, aqui vou ensinar como instalar tudo que precisamos para podermos rodar o Grunt.</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-  <span class="nb">puts</span> <span class="s2">&quot;Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="k">end</span>
-<span class="n">print_hi</span><span class="p">(</span><span class="s1">&#39;Tom&#39;</span><span class="p">)</span>
-<span class="c1">#=&gt; prints &#39;Hi, Tom&#39; to STDOUT.</span></code></pre></div>
+<p>Grunt tem sido uma ferramenta bastante &quot;popstar&quot; no Front-End hoje em dia, e tem seu mérito, pois é uma ferramenta fantástica.</p>
 
-<p>Check out the <a href="http://jekyllrb.com">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/mojombo/jekyll">Jekyll&#39;s GitHub repo</a>.</p>
+<p>Grunt é um automatizador de tarefas escrito em NodeJS, basicamente ele pega essas tarefas chatas de minificar, concatenar, jshint e afins, e as tornam muito mais rápidas e simples.</p>
+
+<p>Vou ensinar aqui o básico de Grunt, para que você já comece a usar em seu projeto.</p>
+
+<h3>Instalar o NodeJS</h3>
+
+<p>Como disse, Grunt foi feito com Node, portanto precisamos dele instalado para podermos usa-lo.</p>
+
+<ul>
+<li><p>Mac: Apenas baixe no site do <a href="http://nodejs.org/">NodeJS</a>, e instale em seu computador.</p></li>
+<li><p>Linux Ubuntu: Dependendo da versão do seu ubunto, seu apt-get pode ter repositórios meio antigos, portanto rode o seguinte:</p></li>
+</ul>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">sudo add-apt-repository ppa:chris-lea/node.js
+sudo apt-get update
+sudo apt-get install python-software-properties python g++ make nodejs</code></pre></div>
+
+<p>Se tudo tiver dado certo, você poderá abrir seu terminal e rodar <code>node -v</code> que ele aparecerá a versão atual do NodeJS (que pode variar de acordo da data que você está vendo este post);</p>
+
+<ul>
+<li>Windows: Acredito que o mesmo procedimento de instalar no Mac resolva.</li>
+</ul>
+
+<h3>Instalar o grunt-cli</h3>
+
+<p>Com o NodeJS instalado, temos acesso a um gerenciador de pacotes chamado <strong>Node Package Manager</strong> (popularmente conhecido como <strong>npm</strong>), com eles instalaremos o comando <code>grunt</code>, para que possamos rodar direto do terminal:</p>
+
+<ul>
+<li>Este procedimento é igual para ambos Mac e Linux (Para Windows também deve funcionar).</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">sudo npm install -g grunt-cli</code></pre></div>
+
+<p>Com isso instalaremos Grunt de forma global na nossa máquina, podendo rodar o comando <code>grunt</code> dentro de qualquer pasta.</p>
+
+<h3>package.json</h3>
+
+<p>Este é um arquivo de configurações padrões do Node, e preciamos dele para podermos instalar e salvar nossas tarefas do Grunt.</p>
+
+<p>Para gerar esse arquivo rode <code>npm init</code> no terminal, e siga os passos que ele informar (Nome do projeto, versão, etc...)</p>
+
+<h3>Instalando o Grunt no projeto</h3>
+
+<p>Depois de ter criado o arquivo package.json, podemos instalar o Grunt rodando:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">npm install grunt --save-dev</code></pre></div>
+
+<p>Dessa forma o modulo do Grunt é instalado, e estamos prontos para instalar nossas tasks, e configurar nosso arquivo que vai rodar essas tasks!</p>
+
+<p>Continue esse tutorial <a href="http://blog.herebecoders.com/js-grunt-baby-steps-parte-2/">nesse post</a></p>
 
         </section>
 
@@ -95,15 +139,15 @@ To add new posts, simply add a file in the <code>_posts</code> directory that fo
             <!-- Share links section -->
             <section class="share">
     <h4>Share this post</h4>
-    <a class="icon-twitter" href="http://twitter.com/share?text=Welcome to Jekyll!&amp;url=http://mauriciosoares.co/blog/thriller/comedy/horror/2013/11/10/welcome-to-jekyll.html"
+    <a class="icon-twitter" href="http://twitter.com/share?text=Grunt, baby steps, parte 1&amp;url=http://mauriciosoares.co/blog/javascript/2015/01/02/grunt-baby-steps-parte-1.html"
         onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
         <span class="hidden">Twitter</span>
     </a>
-    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://mauriciosoares.co/blog/thriller/comedy/horror/2013/11/10/welcome-to-jekyll.html"
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://mauriciosoares.co/blog/javascript/2015/01/02/grunt-baby-steps-parte-1.html"
         onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
         <span class="hidden">Facebook</span>
     </a>
-    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://mauriciosoares.co/blog/thriller/comedy/horror/2013/11/10/welcome-to-jekyll.html"
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://mauriciosoares.co/blog/javascript/2015/01/02/grunt-baby-steps-parte-1.html"
        onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
         <span class="hidden">Google+</span>
     </a>

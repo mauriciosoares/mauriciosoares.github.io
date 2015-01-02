@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Mauricio Soares - Front End Developer</title>
+    <meta name="description" content="Mauricio Soares, Front End Developer" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/main.css" />
+
+</head>
+<body class="post-template">
+
+    <header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="/blog/">Home</a>
+        <a class="subscribe-button icon-feed" href="/blog/rss.xml">Subscribe</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Como funciona o call e o apply</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-01-02">02 Jan 2015</time>
+                
+                    on javascript
+                
+            </section>
+        </header>
+
+<!--         <header class="post-header">
+            <a id="blog-logo" href="http://mauriciosoares.co/blog">
+                
+                    <span class="blog-title">Mauricio Soares</span>
+                
+            </a>
+        </header> -->
+
+        <!-- <span class="post-meta">
+            <time datetime="2015-01-02">02 Jan 2015</time>
+            
+                on javascript
+            
+        </span> -->
+
+        <!-- <h1 class="post-title">Como funciona o call e o apply</h1> -->
+
+        <section class="post-content">
+            <p>No javascript existem 2 métodos mt semelhates, são o <code>call</code> e o <code>apply</code>.</p>
+
+<p>Eles fazem basicamente a mesma coisa, só que o <code>call</code> aceita um número qualquer de parametros, e o apply só aceita 2, um <strong>objeto</strong> e um <strong>array</strong>.</p>
+
+<p>Todas as funções tem uma variável chamada <code>this</code>, que a ponta para o próprio objeto da função, ou no caso de uma constructor, aponta para sua instancia, o <code>apply</code> e o <code>call</code> servem para você chamar estas funções mudando o valor do <code>this</code>.</p>
+
+<p>O primeiro parâmetro de <code>call</code> e <code>apply</code> muda o valor do <code>this</code>, no caso do <code>call</code>, os próximos parâmetros são os parâmetros da função que você está chamando <code>call(novoThis, param1, param2)</code>, e no caso do apply, o primeiro parâmetro também muda o valor de <code>this</code>, e o segundo é um array, que são os parâmetros da função que você está chamando <code>apply(novoThis, [param1, param2])</code></p>
+
+<p>Vamos ver um exemplo:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">metodo</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">obj</span><span class="p">.</span><span class="nx">metodo</span><span class="p">();</span> <span class="c1">// retorna o próprio &quot;obj&quot;</span>
+
+<span class="kd">var</span> <span class="nx">novoObj</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nx">obj</span><span class="p">.</span><span class="nx">metodo</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">novoObj</span><span class="p">);</span> <span class="c1">// retorna o &quot;novoObj&quot;</span></code></pre></div>
+
+<p>Então quando usamos o <code>call</code> no <code>obj.metodo</code>, nós trocamos o valor de this para um objeto diferente.</p>
+
+<p>Isso pode ser útil para muitas coisas:</p>
+
+<p>Transformar a variavel <code>arguments</code> em um Array</p>
+
+<p>Toda função tem uma variável (como o <code>this</code>) chamada <code>arguments</code>, ela é um ArrayLike, significa que ela tem a estrutura de um Array, se parece com um Array, mas não tem os métodos do Array...</p>
+
+<p>Muitas vezes precisamos tratar essa variável com métodos como push ou pop, mas por ser um ArrayLike ela não possui esses métodos, podemos transforma-la em um Array da seguinte forma:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">teste</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
+
+  <span class="nx">args</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s1">&#39;yeah&#39;</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="nx">args</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">teste</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span> <span class="c1">// [1, 2, 3, &#39;yeah&#39;]</span></code></pre></div>
+
+<p>Basicamente nós usamos um método do objeto <code>Array</code> (nativo do javascript), e chamamos ele mudando o valor de <code>this</code>, o slice quando usado sem passar parâmetros, retorna o próprio Array, e internamente o javascript converteu o ArrayLike para um Array mesmo, assim podendo usar os métodos de Arrays na variavel <code>args</code></p>
+
+<p>Outra grande utilidade é reaproveitar métodos de outros objetos, segue o exemplo:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Título maneiro&#39;</span><span class="p">,</span>
+  <span class="nx">sayTitle</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s1">&#39;Este é o título: &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">title</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">obj</span><span class="p">.</span><span class="nx">sayTitle</span><span class="p">();</span> <span class="c1">// Este é o título: Título maneiro</span>
+
+<span class="nx">novoObj</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Outro título maneiro&#39;</span>
+<span class="p">}</span>
+
+<span class="nx">obj</span><span class="p">.</span><span class="nx">sayTitle</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">novoObj</span><span class="p">);</span> <span class="c1">// Este é o título: Outro título maneiro</span></code></pre></div>
+
+<p>Nesse exemplo usamos o método <code>sayTitle</code> de <code>obj</code>, passando o <code>novoObj</code> como o valor de <code>this</code>, reaproveitando assim o método que já existia.</p>
+
+        </section>
+
+        
+
+        <footer class="post-footer">
+            <!-- If we want to display author's name and bio -->
+            
+                <figure class="author-image">
+                    <a class="img" href="/blog/" style="background-image: url(/blog/assets/images/profile.png)">
+                    <span class="hidden">Mauricio Soares's Picture</span></a>
+                </figure>
+                <section class="author">
+                    <!-- Author Name -->
+                    <h4> Mauricio Soares </h4>
+                    <!-- Author Bio -->
+                    <p>
+                        Here goes the author description. You might want to place some links too in here
+                    </p>
+                </section>
+            
+
+            <!-- Share links section -->
+            <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=Como funciona o call e o apply&amp;url=http://mauriciosoares.co/blog/javascript/2015/01/02/como-funciona-o-call-e-o-apply.html"
+        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://mauriciosoares.co/blog/javascript/2015/01/02/como-funciona-o-call-e-o-apply.html"
+        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://mauriciosoares.co/blog/javascript/2015/01/02/como-funciona-o-call-e-o-apply.html"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+            <!-- Disqus comments -->
+            
+
+        </footer>
+
+    </article>
+
+</main>
+
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="/blog/">Mauricio Soares</a> &copy;
+               &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll using
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
+
+    <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+</body>
+</html>

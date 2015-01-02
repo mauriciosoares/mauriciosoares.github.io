@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Mauricio Soares - Front End Developer</title>
+    <meta name="description" content="Mauricio Soares, Front End Developer" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/main.css" />
+
+</head>
+<body class="post-template">
+
+    <header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="/blog/">Home</a>
+        <a class="subscribe-button icon-feed" href="/blog/rss.xml">Subscribe</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Herança entre classes</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-01-02">02 Jan 2015</time>
+                
+                    on javascript
+                
+            </section>
+        </header>
+
+<!--         <header class="post-header">
+            <a id="blog-logo" href="http://mauriciosoares.co/blog">
+                
+                    <span class="blog-title">Mauricio Soares</span>
+                
+            </a>
+        </header> -->
+
+        <!-- <span class="post-meta">
+            <time datetime="2015-01-02">02 Jan 2015</time>
+            
+                on javascript
+            
+        </span> -->
+
+        <!-- <h1 class="post-title">Herança entre classes</h1> -->
+
+        <section class="post-content">
+            <p>Muitas linguagens de programação já vem com um esquema de <strong>Classes</strong> e <strong>Super Classes</strong> pronto, com sua sintaxe já definida, como por exemplo no Ruby quando queremos criar uma herança entre classes:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Mamifero</span>
+  <span class="k">def</span> <span class="nf">respirar</span>
+    <span class="nb">puts</span> <span class="s2">&quot;Inalar e Exalar&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Gato</span> <span class="o">&lt;</span> <span class="no">Mamifero</span>
+  <span class="k">def</span> <span class="nf">falar</span>
+    <span class="nb">puts</span> <span class="s2">&quot;Meow&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></div>
+
+<p>Mas no Javascript não temos uma sintaxe já definida para fazer isso, precisamos simular esse comportamento com o uso de prototypes, applys e calls.</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">Pessoa</span><span class="p">(</span><span class="nx">nome</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">nome</span> <span class="o">=</span> <span class="nx">nome</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">Pessoa</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">falarNome</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="s1">&#39;Olá, meu nome é &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">nome</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">mauricio</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Pessoa</span><span class="p">(</span><span class="s1">&#39;Mauricio&#39;</span><span class="p">);</span>
+<span class="nx">mauricio</span><span class="p">.</span><span class="nx">falarNome</span><span class="p">();</span> <span class="c1">// Olá, meu nome é Mauricio</span></code></pre></div>
+
+<p>Dessa maneira criamos uma classe principal chamada <code>Pessoa</code>, vamos agora criar uma classe chamada <code>Empregado</code>, que extende os métodos de pessoa.</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">Empregado</span><span class="p">(</span><span class="nx">nome</span><span class="p">,</span> <span class="nx">emprego</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// primeiro parametro é o valor de &quot;this&quot;</span>
+  <span class="c1">// o segundo são os parametros da função</span>
+  <span class="nx">Pessoa</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">nome</span><span class="p">);</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">emprego</span> <span class="o">=</span> <span class="nx">emprego</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">mauricio</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Empregado</span><span class="p">(</span><span class="s1">&#39;Mauricio&#39;</span><span class="p">,</span> <span class="s1">&#39;Desenvolvedor Front End&#39;</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">mauricio</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// Mauricio</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">mauricio</span><span class="p">.</span><span class="nx">emprego</span><span class="p">);</span> <span class="c1">// Desenvolvedor Front End</span></code></pre></div>
+
+<p>Vamos entender o que aconteceu aqui.</p>
+
+<p>Primeiro criamos a classe <code>Empregado</code>, e usamos <code>Pessoa.call</code> para atribuir o valor de <code>this.nome</code>. Em poucas palavras, o <code>call</code> e o <code>apply</code> são usados para chamar funções mudando o objeto de <code>this</code>, nesse caso vamos usar o da instancia de <code>Empregado</code>, portanto em <code>Pessoa</code>, quando fazemos <code>this.name = name</code>, o name que esá sendo setado é na instancia do <code>Empregado</code> (Espero não ter ficado muito confuso essa explicação).</p>
+
+<p>Poderiamos ter simplesmente usado <code>this.nome</code> em <code>Empregado</code>, mas vamos imaginar que em <code>Pessoa</code>, quando atribuimos algum valor a <code>nome</code> ocorra algumas verificações, assim não precisamos duplicar códigos em <code>Pessoa</code> e <code>Empregado</code> (DRY - Don&#39;t Repeat Yourself).</p>
+
+<p>Certo, temos nossa segunda classe, mas ela ainda não possui os métodos de <code>Pessoa</code>, vamos resolver isso agora.</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Empregado</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">Pessoa</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
+
+<span class="nx">Empregado</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">novoMetodo</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{}</span></code></pre></div>
+
+<p>Certo, atribuimos ao prototype de <code>Empregado</code> todos os métodos de <code>Pessoa</code>, mas por que usamos <code>Object.create</code>?</p>
+
+<p>Como eu expliquei em um post anterior, os <a href="http://blog.herebecoders.com/js-objetos-por-referencia/">objetos são passados por referência</a>, se simplesmente fizessemos isso <code>Empregado.prototype = Pessoa.prototype</code>, quando criamos <code>novoMetodo</code> em <code>Empregado</code>, automaticamente <code>Pessoa</code> também teria recebido esse método, e não é isso que queremos.</p>
+
+<p>Já estamos bem evoluidos com nossas heranças, vamos ver o comportamento por enquanto:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">mauricio</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Empregado</span><span class="p">(</span><span class="s1">&#39;Mauricio&#39;</span><span class="p">,</span> <span class="s1">&#39;Desenvolvedor Front End&#39;</span><span class="p">);</span>
+<span class="nx">mauricio</span><span class="p">.</span><span class="nx">falarNome</span><span class="p">();</span> <span class="c1">// Olá, meu nome é Mauricio</span></code></pre></div>
+
+<p>Nossa instancia de <code>Empregado</code> já possui métodos de <code>Pessoa</code>, mas vamos supor que queiramos fazer um método muito parecido com o de <code>Pessoa</code>, mas que só que somente incluindo um texto no final?</p>
+
+<p>Existe o jeito fácil de fazer isso:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Empregado</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">falarNomeEmprego</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="s1">&#39;Olá, meu nome é &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">nome</span> <span class="o">+</span> <span class="s1">&#39; e minha profissão é &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">emprego</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Notamos que o começo de nossa resposta é exatamente igual ao método <code>Pessoa.prototype.falarNome</code>, e como boa prática, não se repita :D!</p>
+
+<p>Podemos refatorar o código acima para algo reutilizável:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Empregado</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">falarNomeEmprego</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">falarNome</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; e minha profissão é &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">emprego</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">mauricio</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Empregado</span><span class="p">(</span><span class="s1">&#39;Mauricio&#39;</span><span class="p">,</span> <span class="s1">&#39;Desenvolvedor Front End&#39;</span><span class="p">);</span>
+<span class="nx">mauricio</span><span class="p">.</span><span class="nx">falarNome</span><span class="p">();</span> <span class="c1">// Olá, meu nome é Mauricio</span>
+<span class="nx">mauricio</span><span class="p">.</span><span class="nx">falarNomeEmprego</span><span class="p">();</span> <span class="c1">// Olá, meu nome é Mauricio e minha profissão é Desenvolvedor Front End</span></code></pre></div>
+
+<p>Dessa maneira, usamos novamente o call para chamar o método de <code>Person</code>, mudando o valor de <code>this</code>, pegamos o resultado e concatenamos com o resto da string desejada.</p>
+
+<p>Esses exemplos parecem simples, mas imaginem isso sendo aplicado em regras de negócio mais elaboradas, onde cada método tem vários tipos de verificações, e que não queremos duplicar essas verificações por todo canto da aplicação.</p>
+
+        </section>
+
+        
+
+        <footer class="post-footer">
+            <!-- If we want to display author's name and bio -->
+            
+                <figure class="author-image">
+                    <a class="img" href="/blog/" style="background-image: url(/blog/assets/images/profile.png)">
+                    <span class="hidden">Mauricio Soares's Picture</span></a>
+                </figure>
+                <section class="author">
+                    <!-- Author Name -->
+                    <h4> Mauricio Soares </h4>
+                    <!-- Author Bio -->
+                    <p>
+                        Here goes the author description. You might want to place some links too in here
+                    </p>
+                </section>
+            
+
+            <!-- Share links section -->
+            <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=Herança entre classes&amp;url=http://mauriciosoares.co/blog/javascript/2015/01/02/heranca-entre-classes.html"
+        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://mauriciosoares.co/blog/javascript/2015/01/02/heranca-entre-classes.html"
+        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://mauriciosoares.co/blog/javascript/2015/01/02/heranca-entre-classes.html"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+            <!-- Disqus comments -->
+            
+
+        </footer>
+
+    </article>
+
+</main>
+
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="/blog/">Mauricio Soares</a> &copy;
+               &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll using
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
+
+    <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+</body>
+</html>

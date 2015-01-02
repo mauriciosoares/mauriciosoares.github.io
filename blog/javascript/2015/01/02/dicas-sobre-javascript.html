@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Mauricio Soares - Front End Developer</title>
+    <meta name="description" content="Mauricio Soares, Front End Developer" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/main.css" />
+
+</head>
+<body class="post-template">
+
+    <header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="/blog/">Home</a>
+        <a class="subscribe-button icon-feed" href="/blog/rss.xml">Subscribe</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Dicas sobre Javascript</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-01-02">02 Jan 2015</time>
+                
+                    on javascript
+                
+            </section>
+        </header>
+
+<!--         <header class="post-header">
+            <a id="blog-logo" href="http://mauriciosoares.co/blog">
+                
+                    <span class="blog-title">Mauricio Soares</span>
+                
+            </a>
+        </header> -->
+
+        <!-- <span class="post-meta">
+            <time datetime="2015-01-02">02 Jan 2015</time>
+            
+                on javascript
+            
+        </span> -->
+
+        <!-- <h1 class="post-title">Dicas sobre Javascript</h1> -->
+
+        <section class="post-content">
+            <p>Nesse Post vou colocar algumas dicas sobre Javascript, vou atualizar este post conforme vou me lembrando (ou conhecendo) dicas novas que possam ajudar no seu dia a dia.</p>
+
+<h3>Parametros em funções</h3>
+
+<p>Existe uma variável implicita em todas as funções no Javascript chamada <code>arguments</code>, essa variável é um <strong>ArrayLike</strong> (Se parece com um Array, mas não tem seus métodos), e contém todos os argumentos da sua função quando ela é chamada... até mesmo argumentos que não estão declarados na hora que a função é criada, segue o exemplo:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">teste</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">arguments</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">teste</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span> <span class="c1">// [1, 2, 3]</span></code></pre></div>
+
+<p>Notemos que o terceiro argumento quando chamamos <code>teste()</code> não está declarado na função, mas msm assim existe dentro da variável arguments...</p>
+
+<p>Nenhum parâmetro precisa ser definido para a criação da função para que a variável <code>arguments</code> contenha os argumentos passados.</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">teste</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">arguments</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">teste</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span> <span class="c1">// [1, 2, 3]</span></code></pre></div>
+
+<h3>Elementos com ID&#39;s viram variávels</h3>
+
+<p>Um comportamento que eu achei muito estranho quando descobri, foi que quando criamos um elemento no HTML que contenha um <strong>ID</strong>, ele vira automáticamente uma variável no Javascript, com referência para o próprio elemento:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;teste&quot;</span><span class="nt">&gt;</span>:D<span class="nt">&lt;/div&gt;</span></code></pre></div>
+
+<p>Criamos uma <code>div</code> com o id <code>teste</code>, vamos ver a variável teste no Javascript.</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">typeof</span> <span class="nx">teste</span><span class="p">;</span> <span class="c1">// object</span>
+<span class="nx">teste</span><span class="p">.</span><span class="nx">tagName</span><span class="p">;</span> <span class="c1">// div</span>
+<span class="nx">teste</span><span class="p">.</span><span class="nx">innerText</span><span class="p">;</span> <span class="c1">// :D</span></code></pre></div>
+
+<p>Nós nao declaramos a variável teste, ela simplesmente existe no objeto <code>window</code>.</p>
+
+<p>Não acho muito seguro usar isso em nosso dia a dia, nunca sabemos quando uma library que estamos usando possa sobreescrever essa nossa variável, trazendo comportamentos e bugs inesperados. Por isso sempre declaro minhas variáveis e atribuo os elementos a ela usando <code>getElementById</code> ou algum método do tipo.</p>
+
+<h3>Use Strict</h3>
+
+<p>No Ecmascript 3 existiam alguams features que não eram muito bem compreendidas, e algumas más práticas que podiam ser feitas (que continuam em vigor no Ecmascript 5), o <code>use strict</code> veio para fazer com que essas práticas sejam eliminadas, garantindo assim uma qualidade umpouco mais alta no seu código, como podemos usa-lo?</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// código não estrito</span>
+
+<span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="c1">// código estrito</span></code></pre></div>
+
+<p>Simplesmente use a string <code>&#39;use strict&#39;</code> dentro do seu código, tudo abaixo dela será estrito.</p>
+
+<p>Mas se declararmos o <code>&#39;use strict&#39;</code> dentro de uma <a href="http://blog.herebecoders.com/js-closures-e-suas-utilidades/">closure</a>, somente sua closure estará estrita, e nao o que está fora dela, exemplo:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// codigo não estrito</span>
+
+<span class="kd">function</span> <span class="nx">teste</span><span class="p">()</span> <span class="p">{</span>
+  <span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+    <span class="c1">// codigo estrito</span>
+<span class="p">}</span>
+
+<span class="c1">// codigo não estrito</span></code></pre></div>
+
+<p>Aqui são algumas vantagens do uso do <code>&#39;use strict;&#39;</code></p>
+
+<ul>
+<li>Você não pode usar uma variável sem declara-la:</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+<span class="nx">a</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// Error</span></code></pre></div>
+
+<ul>
+<li>Não é possível deletar uma variável, função ou argumento:</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="k">delete</span> <span class="nx">a</span><span class="p">;</span> <span class="c1">// Error</span></code></pre></div>
+
+<ul>
+<li>Não é possível declarar duas propriedades quando estamos criando um objeto:</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">index1</span><span class="o">:</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="nx">index1</span><span class="o">:</span> <span class="kc">false</span>
+<span class="p">};</span> <span class="c1">// Error</span></code></pre></div>
+
+<p>Lembrando que esse erro ocorre se estamos declarando o objeto de forma literal, se nós criarmos um objeto e em seguida atribuir valores para suas propriedades, funcionará corretamente, exemplo:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">index1</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">index1</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+<span class="nx">a</span><span class="p">.</span><span class="nx">index</span><span class="p">;</span> <span class="c1">// false</span></code></pre></div>
+
+<ul>
+<li>Parametros duplicados em uma função também retorna um erro:</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">teste</span><span class="p">(</span><span class="nx">param1</span><span class="p">,</span> <span class="nx">param1</span><span class="p">)</span> <span class="p">{</span>
+
+<span class="p">}</span> <span class="c1">// Error</span></code></pre></div>
+
+<ul>
+<li>A string <code>arguments</code> (a qual falamos anteriormente) não pode ser usada para atribuir outros valores:</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">arguments</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span> <span class="c1">// Error</span></code></pre></div>
+
+<ul>
+<li>O método <code>with</code> não pode ser usado (Isso pois ele pode retornar bugs inesperados, e alguns erros de compatibilidade)</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="kd">with</span><span class="p">(</span><span class="nb">Math</span><span class="p">)</span> <span class="p">{</span>
+
+<span class="p">}</span> <span class="c1">// Error</span></code></pre></div>
+
+<p>Existem algumas outras restrições no Javascript quando usamso o <code>use strict</code>, mas essas são algumas das bem importantes, que é bom você conhecer.</p>
+
+<h3>Chrome dev tools e $0</h3>
+
+<p>Algo extremamente útil no chrome dev tools, é o <code>$0</code>, se estivermos navegando na aba <strong>Elements</strong>, clicando em todos os elementos que queremos debugar, o último elemento que clicarmos vai ficar salvo em uma variável chamada $0 (e o penúltimo em $1, antepenultimo em $2 e assim vai).</p>
+
+<p>Essa variável pode ser usada na aba <strong>Console</strong>, que apontará para o elemento que você clicou anteriormente em <strong>Elements</strong>.</p>
+
+<p>Portanto suponhamos que você esteja debugando sua aplicação, e quer atribuir algum evento a esse elemento sem precisar fazer algum <code>querySelector</code>, basta fazer o seguinte:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="nx">$0</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
+
+<span class="c1">// ou</span>
+
+<span class="nx">$0</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span></code></pre></div>
+
+<p>Muito simples, não precisamos usar o seletor do jquery, nem usar <code>getElementById</code> ou algo do tipo para termos esse elemento preparado para  ser usado.</p>
+
+        </section>
+
+        
+
+        <footer class="post-footer">
+            <!-- If we want to display author's name and bio -->
+            
+                <figure class="author-image">
+                    <a class="img" href="/blog/" style="background-image: url(/blog/assets/images/profile.png)">
+                    <span class="hidden">Mauricio Soares's Picture</span></a>
+                </figure>
+                <section class="author">
+                    <!-- Author Name -->
+                    <h4> Mauricio Soares </h4>
+                    <!-- Author Bio -->
+                    <p>
+                        Here goes the author description. You might want to place some links too in here
+                    </p>
+                </section>
+            
+
+            <!-- Share links section -->
+            <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=Dicas sobre Javascript&amp;url=http://mauriciosoares.co/blog/javascript/2015/01/02/dicas-sobre-javascript.html"
+        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://mauriciosoares.co/blog/javascript/2015/01/02/dicas-sobre-javascript.html"
+        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://mauriciosoares.co/blog/javascript/2015/01/02/dicas-sobre-javascript.html"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+            <!-- Disqus comments -->
+            
+
+        </footer>
+
+    </article>
+
+</main>
+
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="/blog/">Mauricio Soares</a> &copy;
+               &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll using
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
+
+    <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+</body>
+</html>

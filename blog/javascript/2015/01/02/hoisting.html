@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Mauricio Soares - Front End Developer</title>
+    <meta name="description" content="Mauricio Soares, Front End Developer" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/main.css" />
+
+</head>
+<body class="post-template">
+
+    <header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="/blog/">Home</a>
+        <a class="subscribe-button icon-feed" href="/blog/rss.xml">Subscribe</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Hoisting?</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-01-02">02 Jan 2015</time>
+                
+                    on javascript
+                
+            </section>
+        </header>
+
+<!--         <header class="post-header">
+            <a id="blog-logo" href="http://mauriciosoares.co/blog">
+                
+                    <span class="blog-title">Mauricio Soares</span>
+                
+            </a>
+        </header> -->
+
+        <!-- <span class="post-meta">
+            <time datetime="2015-01-02">02 Jan 2015</time>
+            
+                on javascript
+            
+        </span> -->
+
+        <!-- <h1 class="post-title">Hoisting?</h1> -->
+
+        <section class="post-content">
+            <p>Um comportamento normal do Javascript que pode causar muita confusão na hora que você está desenvolvendo sua aplicação é o <strong>Hoisting</strong>.</p>
+
+<p>O Hoisting consiste em pegar variáveis e métodos que você declarou e organiza-los de forma que você não estava esperando... What?</p>
+
+<p>Por mais confuso que parece ser essa afirmação, é basicamente isso mesmo que ele faz... vamos ver abaixo um simples exemplo:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">teste</span><span class="p">();</span> <span class="c1">// logs: Yeah</span>
+
+<span class="kd">function</span> <span class="nx">teste</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Yeah&#39;</span><span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Nós executamos a função <code>teste</code> sem nem ao menos ela existir antes disso... Isso é causado por conta do Hoisting, que pega as funções e as coloca no começo de sua <a href="http://blog.herebecoders.com/js-closures-e-suas-utilidades/">closure</a>.</p>
+
+<p>Nota, isso só funciona dessa forma nas funções, e não quando atribuimos uma função a uma variável:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">teste</span><span class="p">();</span> <span class="c1">// undefined is not a function</span>
+
+<span class="kd">var</span> <span class="nx">teste</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{};</span></code></pre></div>
+
+<p>Mas ta ai mais um comportamento de Hoisting, se a função não existisse, ela retornaria um erro! o erro seria (no Chrome) <code>Uncaught ReferenceError: teste is not defined</code>, mas nesse caso ele falou que <code>undefined is not a function</code>, isso acontece porque o hoisting pegou nossa variável e jogou no começo do contexto, portanto a variável <code>teste</code> existe, só que ela ainda é <code>undefined</code>, e como o erro diz, <code>undefined is not a function</code>.</p>
+
+<p>Vamos pegar um exemplo mais claro:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">teste</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">hoisting</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">teste</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">teste</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">teste</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">hoisting</span><span class="p">();</span></code></pre></div>
+
+<p>Sem sabermos o que o hoisting faz, nossa lógica seria dizer que ao chamar a função <code>hoisting()</code>, o primeiro log retornaria <code>true</code>, e o segundo retornaria <code>false</code>; Mas ai é que você se engana, o retorno do primeiro log é <code>undefined</code> e do segundo é <code>false</code>. Vamos reescrever o código para vermos como ele ficaria por tras dos panos:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">teste</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">hoisting</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">teste</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">teste</span><span class="p">);</span> <span class="c1">// undefined</span>
+  <span class="kd">var</span> <span class="nx">teste</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">teste</span><span class="p">);</span> <span class="c1">// false</span>
+<span class="p">}</span>
+
+<span class="nx">hoisting</span><span class="p">();</span></code></pre></div>
+
+<p>Dentro de nossa closure, ao declaramos a variável <code>teste</code> dentro de <code>hoisting</code>, ela vai automáticamente para o começo de nossa função, só que sem receber seu valor. Logo o primeiro log busca a variável <code>teste</code> dentro de hoisting, que por sua vez é <code>undefined</code>, em seguida atribuimos um valor a <code>teste</code>, e então ela será <code>false</code>.</p>
+
+<p>Isso pode parecer bem maluco, mas precisamos entender bem esses gotchas do Javascript para não nos enrolarmos em nossas aplicações...</p>
+
+<p>Se nós não tivessemos declarado <code>teste</code> dentro da função <code>hoisting</code>, ai simela pegaria o valor que está fora da função, a variavel <code>teste</code> global:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">teste</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">hoisting</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">teste</span><span class="p">);</span> <span class="c1">// true</span>
+  <span class="nx">teste</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">teste</span><span class="p">);</span> <span class="c1">// false</span>
+<span class="p">}</span>
+
+<span class="nx">hoisting</span><span class="p">();</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">teste</span><span class="p">);</span> <span class="c1">// false</span></code></pre></div>
+
+<p>Notemos que agora <code>teste</code> dentro de hoisting não está sendo declarado (com o uso do <code>var</code>), portanto o primeiro log busca o <code>teste</code> no escopo global, e quando fazemos <code>teste = false</code>, nós estamos alterando também o escopo global, ao darmos log em <code>teste</code> depois de <code>hoisting()</code>, o mesmo é <code>false</code> e não mais <code>true</code>.</p>
+
+<p>Dica: Sempre declare suas variáveis no começo de sua closure, para evitar problemas com hoisting:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Não é uma boa prática</span>
+<span class="kd">function</span> <span class="nx">teste</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// muitos códigos</span>
+
+    <span class="kd">var</span> <span class="nx">abc</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
+
+    <span class="c1">// mais muitos códigos</span>
+<span class="p">}</span>
+
+<span class="c1">// Boa prática</span>
+<span class="kd">function</span> <span class="nx">teste</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">abc</span><span class="p">;</span>
+  <span class="c1">// muitos códigos</span>
+
+  <span class="nx">abc</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
+
+    <span class="c1">// mais muitos códigos</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Isso é basicamente um overview de como <strong>hoisting</strong> funciona, ainda existem mais algumas particularidades, mas definitivamente essas você precisa estar ciente, para não se dar mal no futuro.</p>
+
+        </section>
+
+        
+
+        <footer class="post-footer">
+            <!-- If we want to display author's name and bio -->
+            
+                <figure class="author-image">
+                    <a class="img" href="/blog/" style="background-image: url(/blog/assets/images/profile.png)">
+                    <span class="hidden">Mauricio Soares's Picture</span></a>
+                </figure>
+                <section class="author">
+                    <!-- Author Name -->
+                    <h4> Mauricio Soares </h4>
+                    <!-- Author Bio -->
+                    <p>
+                        Here goes the author description. You might want to place some links too in here
+                    </p>
+                </section>
+            
+
+            <!-- Share links section -->
+            <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=Hoisting?&amp;url=http://mauriciosoares.co/blog/javascript/2015/01/02/hoisting.html"
+        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://mauriciosoares.co/blog/javascript/2015/01/02/hoisting.html"
+        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://mauriciosoares.co/blog/javascript/2015/01/02/hoisting.html"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+            <!-- Disqus comments -->
+            
+
+        </footer>
+
+    </article>
+
+</main>
+
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="/blog/">Mauricio Soares</a> &copy;
+               &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll using
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
+
+    <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+</body>
+</html>

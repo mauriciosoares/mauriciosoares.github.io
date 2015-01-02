@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Mauricio Soares - Front End Developer</title>
+    <meta name="description" content="Mauricio Soares, Front End Developer" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/main.css" />
+
+</head>
+<body class="post-template">
+
+    <header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="/blog/">Home</a>
+        <a class="subscribe-button icon-feed" href="/blog/rss.xml">Subscribe</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">CSS modular com SMACSS</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-01-02">02 Jan 2015</time>
+                
+                    on css
+                
+            </section>
+        </header>
+
+<!--         <header class="post-header">
+            <a id="blog-logo" href="http://mauriciosoares.co/blog">
+                
+                    <span class="blog-title">Mauricio Soares</span>
+                
+            </a>
+        </header> -->
+
+        <!-- <span class="post-meta">
+            <time datetime="2015-01-02">02 Jan 2015</time>
+            
+                on css
+            
+        </span> -->
+
+        <!-- <h1 class="post-title">CSS modular com SMACSS</h1> -->
+
+        <section class="post-content">
+            <p>Algo que faz com que muitos back-ends não sejam tao respeitosos com o Front-End é a facilidade com que as coisas fogem do controle (e elas fogem).</p>
+
+<p>Com o CSS não é diferente... quantas vezes você (e eu também) não escreveu css dessa maneira:</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nf">#header</span> <span class="nt">ul</span> <span class="p">{</span> <span class="c">/*code*/</span> <span class="p">}</span>
+<span class="nf">#header</span> <span class="nt">ul</span> <span class="nt">li</span> <span class="p">{</span> <span class="c">/*code*/</span> <span class="p">}</span>
+<span class="nf">#header</span> <span class="nt">ul</span> <span class="o">&gt;</span> <span class="nt">a</span> <span class="p">{</span> <span class="c">/*code*/</span> <span class="p">}</span>
+<span class="nf">#header</span> <span class="nt">ul</span> <span class="o">&gt;</span> <span class="nt">a</span> <span class="nt">span</span> <span class="p">{</span> <span class="c">/*code*/</span> <span class="p">}</span></code></pre></div>
+
+<p>Parece somente um CSS inofensivo, mas para dar manutenção nisso é um inferno, imaginem que um desenvolvedor novo comemça a tralhar nesse projeto, ele nunca vai saber somente olhando para os seletores o que é o que...</p>
+
+<p>Sem contar que se entrar um seletor no meio disso, provavelmente você vai ter que alterar todos os seletores anteriores para não acontecer algum erro maluco. Isso quando você não coloca outro seletor exatamente igual no final do arquivo, por que você não sabe se vc alterar aquele trecho não vai ferrar com alguma outra parte do site:</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nf">#header</span> <span class="nt">ul</span> <span class="p">{</span> <span class="c">/*code*/</span> <span class="p">}</span>
+<span class="nf">#header</span> <span class="nt">ul</span> <span class="nt">li</span> <span class="p">{</span> <span class="c">/*code*/</span> <span class="p">}</span>
+<span class="nf">#header</span> <span class="nt">ul</span> <span class="o">&gt;</span> <span class="nt">a</span> <span class="p">{</span> <span class="c">/*code*/</span> <span class="p">}</span>
+<span class="nf">#header</span> <span class="nt">ul</span> <span class="o">&gt;</span> <span class="nt">a</span> <span class="nt">span</span> <span class="p">{</span> <span class="c">/*code*/</span> <span class="p">}</span>
+
+<span class="c">/* muitas e muitas linhas de código */</span>
+<span class="nf">#header</span> <span class="nt">ul</span> <span class="o">&gt;</span> <span class="nt">a</span> <span class="nt">span</span> <span class="p">{</span>
+  <span class="k">font-size</span><span class="o">:</span> <span class="m">14px</span> <span class="cp">!important</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Isso resolveria por hora, mas você reza para não ter que mexer nesse código 2 vezes, e com esse problema veio uma métodologia chamada SMACSS (<strong>S</strong>calable and <strong>M</strong>odular <strong>A</strong>rchitecture for <strong>CSS</strong>).</p>
+
+<p>Nesse post não vou ensinar nada extremamente avançado, mas alguns fundamentos baseados na minha experiência para que você já comece a usufruir dessa metodologia.</p>
+
+<p>O SMACSS é separado em 5 partes:</p>
+
+<ul>
+<li>Base</li>
+<li>Layout</li>
+<li>Module</li>
+<li>State</li>
+<li>Theme</li>
+</ul>
+
+<p>Parece muito, mas vamos ver que é o suficiente para qualquer trabalho.</p>
+
+<p>Uma prática minha (que não necessáriamente precisa ser seguida), é que eu gosto de usar somente <strong>classes</strong> nos meus elementos do HTML, só uso <strong>ID`s</strong> quando vou tratar esse elemento com Javascript.</p>
+
+<p>Hoje eu separo em muitos arquivos meus arquivos de CSS, para ajudar na modularização, mas separando tudo em 5 arquivos diferentes já é o suficiente.</p>
+
+<h2>base.css</h2>
+
+<p>São basicamente os seletores puros de css, como <code>div</code>, <code>span</code>, <code>body</code> e afins...</p>
+
+<p>Tudo que você precisar mexer nesses elementos, coloque diretamente neste arquivo. Outra coisa importante, não aninhe os seletores, coloque um em cada linha:</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">body</span> <span class="p">{</span>
+  <span class="k">background</span><span class="o">:</span> <span class="nb">blue</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">a</span> <span class="p">{</span>
+  <span class="k">color</span><span class="o">:</span> <span class="nb">red</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">a</span><span class="nd">:hover</span> <span class="p">{</span>
+  <span class="k">color</span><span class="o">:</span> <span class="nb">purple</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Nesse arquivo vai as configurações básicas do seu site, que muitas vezes são até sobreescritas por outras regras dos próximos arquivos.</p>
+
+<h2>layout.css</h2>
+
+<p>Pense nos layouts como se fossem blocos do seu site, por exemplo o Header, Footer, Sidebar e o Container do seu site são layouts... Nele configuramos larguras, alturas, floats, backgrounds, coisas mais relacionadas a posição desses blocos e a estilização básica deles:</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nc">.header</span><span class="o">,</span> <span class="nc">.footer</span><span class="p">{</span>
+  <span class="k">width</span><span class="o">:</span> <span class="m">960px</span><span class="p">;</span>
+    <span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="k">auto</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.sidebar</span> <span class="p">{</span>
+  <span class="k">width</span><span class="o">:</span> <span class="m">200px</span><span class="p">;</span>
+    <span class="k">background-color</span><span class="o">:</span> <span class="nb">blue</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Cada bloco desses contém vários modulos, e ai vem nossa terceira regra:</p>
+
+<h2>module.css</h2>
+
+<p>Os modulos podem ser pensados como se fosse o logo do seu site, a barra de navegação, o post do seu blog, a barra de busca, basicamente todos os componentes que o usuário interage, vamos ver como fariamos uma barra de navegação:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;nav&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;ul&gt;</span>
+      <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;nav-item&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">&quot;nav-item-link&quot;</span> <span class="na">href=</span><span class="s">&quot;#&quot;</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+      <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;nav-item&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">&quot;nav-item-link&quot;</span> <span class="na">href=</span><span class="s">&quot;#&quot;</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+      <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;nav-item&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">&quot;nav-item-link&quot;</span> <span class="na">href=</span><span class="s">&quot;#&quot;</span><span class="nt">&gt;</span>Link<span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
+
+<p>Vamos pensar como foi organizado essa estrutura, primeiro nosso componente se chama <code>nav</code>, pois foi nomeado assim a div principal onde ele fica... todos os subcomponentes que vão ser estilizados se chamarão <code>nav-*</code>, e os sub dos subcomponentes vão ser <code>nav-*-*</code>, e assim por diante... Notem o traço separando cada identificação.</p>
+
+<p>Mas realmente é necessário colocar tantas classes assim no nosso HTML? Sim... faz com que a manutenabilidade do seu código fique mt mais fácil, e seu css mais declarativo (facilitando outros devs que forem mexer no seu código entender melhor a estrutura, sem nem precisar abrir o HTML).</p>
+
+<p>Vamos ao CSS</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="c">/**</span>
+<span class="c">* Module: Nav</span>
+<span class="c">*/</span>
+<span class="nc">.nav</span> <span class="p">{</span>
+  <span class="k">position</span><span class="o">:</span> <span class="k">relative</span><span class="p">;</span>
+    <span class="k">margin-top</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.nav-item</span> <span class="p">{</span>
+  <span class="k">float</span><span class="o">:</span><span class="k">left</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.nav-item-link</span> <span class="p">{</span>
+  <span class="k">color</span><span class="o">:</span> <span class="nb">blue</span><span class="p">;</span>
+    <span class="k">text-decoration</span><span class="o">:</span> <span class="k">underline</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Primeiro o comentário, como estamos usando um arquivo somente, seria interessante ter comentários separando cada modulo... Como uma maneira melhor de organizar seus arquivos poderiamos separar cada modulo em arquivos css, para ficar tipo: <code>/assets/css/modules/nav.css</code>, mas para começo um arquivo já é mais do que o suficiente.</p>
+
+<p>Notem também que não existe aninhamento, pois não é preciso. A nomenclatura que usamos faz com que nosso modulo nunca irá conflitar com outros módulos (claro se você usar nomes únicos para seus modulos), e também faz com que você possa pegar seu módulo de qualquer parte do seu HTML, e colocar em qualquer outro lugar, pois o único css que ele precisa é o do próprio módulo, ele não está aninhado com <code>header</code> ou <code>footer</code>. Isso é ótimo!</p>
+
+<h2>state.css</h2>
+
+<p>O state é o comportamento dos seu módulos, imagine que você queira que seu <code>nav</code> suma com o click de algum botão no seu site, poderiamos muito bem pegar o jQuery e fazer o seguinte:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.nav&#39;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span></code></pre></div>
+
+<p>Isso funcionaria muito bem, mas fica dificil de debugar conforme o tempo, e como as boas práticas mandam, evite usar style inline nos seus elementos, vejamos como podermos resolver isso.</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nc">.is-hidden</span> <span class="p">{</span>
+  <span class="k">display</span><span class="o">:</span> <span class="k">none</span> <span class="cp">!important</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>E no JS?</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.nav&#39;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;is-hidden&#39;</span><span class="p">);</span></code></pre></div>
+
+<p>As coisas ficam novamente, muito declarativas, uma classe objetiva para esconder elementos faz com que ela seja reutilizavel em qualquer componente.</p>
+
+<p>Notemos o uso do <code>!important</code>, aqui é um dos poucos lugares que você vai precisar usa-lo, pois queremos forçar o elemento a sumir, e se ele por default tiver <code>display: block;</code> poderia atrapalhar umpouco as coisas.</p>
+
+<p>States também são usados para muitas outras situações, como <code>.is-visible</code>(para mostrar elementos escondidos), <code>is-error</code>(para estilizar de vermelho alguma div com error), e assim vai, depende da sua imaginação.</p>
+
+<p>Com isso dito, vamos a última regra.</p>
+
+<h2>theme.css</h2>
+
+<p>O theme nem sempre é usado (eu particularmente usei pouquissimas vezes), seu papel é para quando nosso site tem mais de um tema principal (Tema Azul, ou Tema Vermelho) sejá facil essa transição de um para o outro.</p>
+
+<p>Vamos usar como exemplo nosso módulo de <code>nav</code>.</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="c">/* module.css */</span>
+<span class="nc">.nav</span> <span class="p">{</span>
+  <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="nb">blue</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Se por um acaso nosso site ter 2 temas, um Azul e um Vermelho por exemplo, que são trocados de acordo com as ações do usuário, poderiamos substituir a configuração de <code>nav</code>usando o arquivo <code>theme.css</code>.</p>
+
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="c">/* theme.css */</span>
+<span class="nc">.nav</span> <span class="p">{</span>
+  <span class="k">border-color</span><span class="o">:</span> <span class="nb">red</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Notemos que só trocamos o que era necessário, a espessura da borda continuou 1px e solid, mas trocamos a cor para nosso tema vermelho.</p>
+
+<p>Geralmente os arquivos de temas precisam ser mais separados, como por exemplo <code>/themes/red.css</code>, <code>/themes/blue.css</code>, e chamamos o arquivo.css que precisarmos pro momento.</p>
+
+<p>O Smacss ainda tem mais particularidades, e situações muito interessantes que podem nos ajudar com organização do CSS, mas com esse tutorial você já pode começar a escrever seu CSS modular a partir de hoje!</p>
+
+        </section>
+
+        
+
+        <footer class="post-footer">
+            <!-- If we want to display author's name and bio -->
+            
+                <figure class="author-image">
+                    <a class="img" href="/blog/" style="background-image: url(/blog/assets/images/profile.png)">
+                    <span class="hidden">Mauricio Soares's Picture</span></a>
+                </figure>
+                <section class="author">
+                    <!-- Author Name -->
+                    <h4> Mauricio Soares </h4>
+                    <!-- Author Bio -->
+                    <p>
+                        Here goes the author description. You might want to place some links too in here
+                    </p>
+                </section>
+            
+
+            <!-- Share links section -->
+            <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=CSS modular com SMACSS&amp;url=http://mauriciosoares.co/blog/css/2015/01/02/css-modular-com-smacss.html"
+        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://mauriciosoares.co/blog/css/2015/01/02/css-modular-com-smacss.html"
+        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://mauriciosoares.co/blog/css/2015/01/02/css-modular-com-smacss.html"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+            <!-- Disqus comments -->
+            
+
+        </footer>
+
+    </article>
+
+</main>
+
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="/blog/">Mauricio Soares</a> &copy;
+               &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll using
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
+
+    <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Mauricio Soares - Front End Developer</title>
+    <meta name="description" content="Mauricio Soares, Front End Developer" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/main.css" />
+
+</head>
+<body class="post-template">
+
+    <header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="/blog/">Home</a>
+        <a class="subscribe-button icon-feed" href="/blog/rss.xml">Subscribe</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Método extend</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-01-02">02 Jan 2015</time>
+                
+                    on javascript
+                
+            </section>
+        </header>
+
+<!--         <header class="post-header">
+            <a id="blog-logo" href="http://mauriciosoares.co/blog">
+                
+                    <span class="blog-title">Mauricio Soares</span>
+                
+            </a>
+        </header> -->
+
+        <!-- <span class="post-meta">
+            <time datetime="2015-01-02">02 Jan 2015</time>
+            
+                on javascript
+            
+        </span> -->
+
+        <!-- <h1 class="post-title">Método extend</h1> -->
+
+        <section class="post-content">
+            <p>A alguns posts atras, nós falamos que objetos são <a href="http://blog.herebecoders.com/js-objetos-por-referencia/">passados por referência</a>, e descobrimos que quando atribuimos um objeto a outra variável, ele é somente uma referência deste primeiro objeto, e tudo que for alterado no primeiro, será alterado no segundo também.</p>
+
+<p>Resolvemos este problema usando <code>Object.create</code>, que cria uma cópia e não uma referência do primeiro objeto, vamos ver um exemplo:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Copiar objetos sem object.create</span>
+  <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{},</span>
+    <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">;</span>
+  <span class="nx">b</span><span class="p">.</span><span class="nx">teste</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="nx">a</span><span class="p">.</span><span class="nx">teste</span><span class="p">;</span> <span class="c1">// true</span>
+
+  <span class="c1">// Copiar objetos com object.create</span>
+  <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{},</span>
+    <span class="nx">b</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+
+  <span class="nx">b</span><span class="p">.</span><span class="nx">teste</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="nx">a</span><span class="p">.</span><span class="nx">teste</span><span class="p">;</span> <span class="c1">// undefined</span></code></pre></div>
+
+<p>Isso resolve muitos possíveis bugs que aconteceriam inesperadamente em nossa aplicação, mas temos 2 problemas com essa técnica:</p>
+
+<p>1 - Object.create só funciona a partir do Ecmascript 5, portanto IE8 para baixo não funciona</p>
+
+<p>2 - Object.create só cria uma cópia da raiz do objeto, se tivermos outros objetos aninhados, ainda assim eles serão referências do primeiro, exemplo:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">objetoAninhado</span><span class="o">:</span> <span class="p">{}</span>
+<span class="p">},</span>
+
+<span class="nx">b</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+
+<span class="c1">// criamos um indice a mais na raiz (onde Object.create foi usado)</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">teste</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">teste</span><span class="p">;</span> <span class="c1">// undefined</span>
+
+<span class="c1">// criamos um indice a mais em um elemento aninhado (onde Object.create não foi usado)</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">objetoAninhado</span><span class="p">.</span><span class="nx">teste</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">objetoAninhado</span><span class="p">.</span><span class="nx">teste</span><span class="p">;</span> <span class="c1">// true</span></code></pre></div>
+
+<p>É... Javascript tem suas particularidades, e esse é um comportamento não muito esperado (para ser sincero descobri isso a não muito tempo antes de escrever esse post).</p>
+
+<p>Ao ler o livro <a href="http://shop.oreilly.com/product/9780596806767.do" target="_blank">Javascript Patterns</a>, do Stoyan Stefanov (que por sinal é um excelente livro), ele ensina uma técnica muito boa de contornar esse error, e criar todos os elementos aninhados de forma que eles sejam uma cópia, e não uma referência (YAY!).</p>
+
+<p>E assim damos vida ao método <code>extend</code>.</p>
+
+<p>Vamos ver a utilização de <code>extend</code> antes de implementa-lo:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">objetoAninhado</span><span class="o">:</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">extend</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+
+<span class="c1">// poderiamos fazer da seguinte forma também:</span>
+<span class="c1">// var b = {};</span>
+<span class="c1">// extend(a, b);</span>
+
+<span class="nx">b</span><span class="p">.</span><span class="nx">teste</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">teste</span><span class="p">;</span> <span class="c1">// undefined</span>
+
+<span class="nx">b</span><span class="p">.</span><span class="nx">objetoAninhado</span><span class="p">.</span><span class="nx">teste</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">objetoAninhado</span><span class="p">.</span><span class="nx">teste</span><span class="p">;</span> <span class="c1">// undefined</span></code></pre></div>
+
+<p>Ao usarmos o extend, o item aninhado <code>b.objetoAninhado</code> não é uma referência de <code>a.objetoAninhado</code>, e isso funciona de forma que indexes mais aninhados continuem a não ser uma referência do objeto copiado.</p>
+
+<p>Vamos ver a implementação desse método, e explica-lo em seguida:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">extend</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">parent</span><span class="p">,</span> <span class="nx">child</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 1</span>
+  <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nx">child</span> <span class="o">=</span> <span class="nx">child</span> <span class="o">||</span> <span class="p">{},</span>
+    <span class="nx">toStr</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span><span class="p">,</span>
+    <span class="nx">arrayRef</span> <span class="o">=</span> <span class="s1">&#39;[object Array]&#39;</span><span class="p">;</span> <span class="c1">// 2</span>
+
+  <span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="k">in</span> <span class="nx">parent</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 3</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">parent</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">i</span><span class="p">))</span> <span class="p">{</span> <span class="c1">// 4</span>
+      <span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">parent</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;object&#39;</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 5</span>
+        <span class="nx">child</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="nx">toStr</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">parent</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="o">===</span> <span class="nx">arrayRef</span><span class="p">)</span> <span class="o">?</span> <span class="p">[]</span> <span class="o">:</span> <span class="p">{};</span> <span class="c1">// 6</span>
+        <span class="nx">extend</span><span class="p">(</span><span class="nx">parent</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">child</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span> <span class="c1">// 7</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="c1">// 8</span>
+        <span class="nx">child</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">parent</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span> <span class="c1">// 9</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="nx">child</span><span class="p">;</span> <span class="c1">// 10</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Vou explicar de forma geral o que o método faz, e depois detalhadamente...</p>
+
+<p>O método pega o objeto que já existe, e varre entre todos os seus índices, e verifica se esse indice é um Array/Object, ou qualquer outro valor (String, Boolean, Null, Number), se ele for qualquer outro valor (esses valores não são passados por referência) ele já atribui no index no novo objeto, se for um Array/Object, ele chama a msm função de forma recursiva, até achar os valores que não são passados por referência, e popular os recém criados objetos e arrays.</p>
+
+<p>1 - Criamos nossa função, e colocamos 2 parâmetros, o objeto <code>parent</code> (obrigatório), do qual queremos copiar os indices, e o objeto <code>child</code> (opcional).</p>
+
+<p>2 - Declaramos algumas variáveis:
+<code>i</code>: para loopins.
+<code>child</code>: onde recebemos opcionalmente o objeto em que queremos fazer o extend, caso contrário ele retorna um objeto recém criado.
+<code>toStr</code>: apenas uma referência para podermos verificar se um objeto é um Array ou um Object (No Javascript, <code>typeof []</code> e <code>typeof {}</code> retornam &quot;object&quot;).
+<code>arrayRef</code>: um facilitador para verificar o tipo do objeto, e deixarmos nosso código umpouco mais claro (veremos onde é usado umpouco abaixo).</p>
+
+<p>3 - Usamos o <strong>for in</strong> do Javascript, para iterarmos entre todos os indices do objeto <code>parent</code>, o qual estamos replicando.</p>
+
+<p>4 - Verificamos se o índice de <code>parent</code> é uma propriedade dele mesmo (Poderia ter vindo no objeto prototype, se esse objeto fosse uma instancia).</p>
+
+<p>5 - Verificamos se o índice é um <code>object</code>, como disse anteriormente, tanto objetos quanto arrays no javascript retornam <code>object</code>, e são esses casos que queremos que sejam duplicados e não sejam passados como referência para o outro objeto.</p>
+
+<p>6 - Fazemos um pequeno ternário, vamos ver como ficaria isso de forma mais clara:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">if</span><span class="p">(</span><span class="nx">toStr</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">parent</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="o">===</span> <span class="nx">arrayRef</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// se o retorno desse call for igual a [object Array] (a variável que declaramos no começo)</span>
+  <span class="nx">child</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span> <span class="c1">// child recebe um array novo, e não uma referência</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="nx">child</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">{};</span> <span class="c1">// child recebe um objeto novo, e não uma referência</span>
+<span class="p">}</span></code></pre></div>
+
+<p>7 - Essa parte pode ser a mais complicada, na programação existe uma técnica chamada <a href="http://pt.wikipedia.org/wiki/Recurs%C3%A3o_(ci%C3%AAncia_da_computa%C3%A7%C3%A3o)" target="_blank">Recursividade</a>, essa técnica consiste em chamar uma função dentro dela mesma. Isso pode ser muito útil para items aninhados que tem uma quantidade dinâmica, não precisando fazer IFs dentro de IFs para verificar todas as possibilidades.</p>
+
+<p>Usamos a recursão aqui para rodar novamente nosso extend, e assim criar indices novos dentro de nossos recém criados Arrays e Objects, junto com seus respectivos valores.</p>
+
+<p>8 - Se não for um objeto</p>
+
+<p>9 - Simplesmente atribui o valor que não é passado por referência, para o index do novo objeto.</p>
+
+<p>10 - E por último ele retorna o próprio objeto recém criado.</p>
+
+<p>Pode parecer complicado, mas é mais simples do que parece, sua útilidade é bem grande, e pode ajudar em muitos projetos em que você não estiver trabalhando com Constructors, e quer fazer heranças.</p>
+
+        </section>
+
+        
+
+        <footer class="post-footer">
+            <!-- If we want to display author's name and bio -->
+            
+                <figure class="author-image">
+                    <a class="img" href="/blog/" style="background-image: url(/blog/assets/images/profile.png)">
+                    <span class="hidden">Mauricio Soares's Picture</span></a>
+                </figure>
+                <section class="author">
+                    <!-- Author Name -->
+                    <h4> Mauricio Soares </h4>
+                    <!-- Author Bio -->
+                    <p>
+                        Here goes the author description. You might want to place some links too in here
+                    </p>
+                </section>
+            
+
+            <!-- Share links section -->
+            <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=Método extend&amp;url=http://mauriciosoares.co/blog/javascript/2015/01/02/metodo-extend.html"
+        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://mauriciosoares.co/blog/javascript/2015/01/02/metodo-extend.html"
+        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://mauriciosoares.co/blog/javascript/2015/01/02/metodo-extend.html"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+            <!-- Disqus comments -->
+            
+
+        </footer>
+
+    </article>
+
+</main>
+
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="/blog/">Mauricio Soares</a> &copy;
+               &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll using
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
+
+    <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+</body>
+</html>

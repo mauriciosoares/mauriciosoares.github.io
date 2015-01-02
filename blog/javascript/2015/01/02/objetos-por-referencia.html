@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Mauricio Soares - Front End Developer</title>
+    <meta name="description" content="Mauricio Soares, Front End Developer" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/main.css" />
+
+</head>
+<body class="post-template">
+
+    <header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="/blog/">Home</a>
+        <a class="subscribe-button icon-feed" href="/blog/rss.xml">Subscribe</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Objetos por referência</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-01-02">02 Jan 2015</time>
+                
+                    on javascript
+                
+            </section>
+        </header>
+
+<!--         <header class="post-header">
+            <a id="blog-logo" href="http://mauriciosoares.co/blog">
+                
+                    <span class="blog-title">Mauricio Soares</span>
+                
+            </a>
+        </header> -->
+
+        <!-- <span class="post-meta">
+            <time datetime="2015-01-02">02 Jan 2015</time>
+            
+                on javascript
+            
+        </span> -->
+
+        <!-- <h1 class="post-title">Objetos por referência</h1> -->
+
+        <section class="post-content">
+            <p>Quando trabalhamos com variáveis temos o abto de passar valores para outras variáveis, e assim trata-las, como abaixo:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">;</span>
+<span class="nx">b</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span> <span class="c1">// 1</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span> <span class="c1">// 2</span></code></pre></div>
+
+<p>Esse comportamento é bem simples, o valor de <code>a</code> não muda pois ele foi &quot;duplicado&quot; para o <code>b</code>, e tudo que você fizer em <code>b</code> não afetará em <code>a</code>.</p>
+
+<p>Comparações entre variáveis também são bem simples:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="nx">a</span> <span class="o">==</span> <span class="nx">b</span><span class="p">;</span> <span class="c1">// true</span>
+<span class="nx">a</span> <span class="o">===</span> <span class="nx">b</span><span class="p">;</span> <span class="c1">// true</span></code></pre></div>
+
+<p>Só para esclarecer, o sinal <code>==</code> compara os valores das variáveis, e <code>===</code> compara os valores e os tipos (<code>2 === &#39;2&#39; // false</code>).</p>
+
+<p>Mas quando trabalhamos com objetos esse comportamento é diferente (e muitas vezes trazem bugs inesperádos). Vamos ver o seguinte exemplo:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">({}</span> <span class="o">==</span> <span class="p">{})</span> <span class="c1">// false</span>
+<span class="p">({}</span> <span class="o">===</span> <span class="p">{})</span> <span class="c1">// false</span></code></pre></div>
+
+<p>Vemos que a comparação entre esses 2 objetos sempre retornam false, isso ocorre por que no Javascript um objeto nunca é igual a outro objeto.</p>
+
+<p>O javascript trabalha com objetos passando eles por referência, isso faz com que ao atribuir um objeto a uma variável, e em seguida atribuir essa mesma variável a uma nova variável, faz com que se a segunda for alterada, a primeira também será, com um exemplo é mais fácil de entender essa confusão:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">propriedadeDeA</span><span class="o">:</span> <span class="kc">true</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">;</span>
+
+<span class="nx">b</span><span class="p">.</span><span class="nx">propriedadeDeA</span> <span class="c1">// true</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">propriedadeDeB</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+<span class="nx">a</span><span class="p">.</span><span class="nx">propriedadeDeB</span> <span class="c1">// true</span></code></pre></div>
+
+<p>Como o exemplo acima mostra, quando atribuimos <code>b.propriedadeDeB = true</code>, automaticamente <code>a</code> também recebe a propriedade <code>propriedadeDeB</code>, isso acontece porque <code>b</code> é somente uma referência de <code>a</code>, e tudo que for alterado em um, será alterado no outro.</p>
+
+<p>Essa também é a única situação em que um objeto será igual a outro (pois eles são o mesmo, somente uma referência):</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">;</span>
+
+<span class="nx">a</span> <span class="o">==</span> <span class="nx">b</span><span class="p">;</span> <span class="c1">// true</span>
+<span class="nx">a</span> <span class="o">===</span> <span class="nx">b</span><span class="p">;</span> <span class="c1">// true</span></code></pre></div>
+
+<p>Isso pode ser um problema quando queremos criar um objeto novo a partir de um já existente, e não queremos que o antigo mude, mas pode ser facilmente contornado com <code>Object.create</code>, segue:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span><span class="nx">hello</span><span class="o">:</span> <span class="s1">&#39;world&#39;</span><span class="p">};</span>
+<span class="c1">// criamos um objeto igual ao &quot;a&quot;, mas não</span>
+<span class="c1">// sendo uma referência, e sim um objeto novo</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+
+<span class="nx">b</span><span class="p">.</span><span class="nx">hello</span><span class="p">;</span> <span class="c1">// world</span>
+
+<span class="nx">a</span> <span class="o">==</span> <span class="nx">b</span><span class="p">;</span> <span class="c1">// false</span>
+<span class="nx">a</span> <span class="o">===</span> <span class="nx">b</span><span class="p">;</span> <span class="c1">// false</span>
+
+<span class="nx">b</span><span class="p">.</span><span class="nx">novaPropriedade</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+<span class="nx">a</span><span class="p">.</span><span class="nx">novaPropriedade</span><span class="p">;</span> <span class="c1">// undefined</span></code></pre></div>
+
+<p>No exemplo acima eu criei um objeto chamado <code>a</code>, e criei um novo objeto chamado <code>b</code> usando o <code>Object.create</code>, notamos que <code>b</code> não é uma referência de <code>a</code> quando comparamos os 2 objetos com <code>==</code> e <code>===</code>, e todas as propriedades novas que eu adicionar em <code>b</code> não afetarão em nada o objeto <code>a</code>.</p>
+
+<p>Essa técnica pode ser muito útil quando trabalhamos com <strong>herança de classes</strong> no javascript, falarei em breve sobre esse assunto.</p>
+
+        </section>
+
+        
+
+        <footer class="post-footer">
+            <!-- If we want to display author's name and bio -->
+            
+                <figure class="author-image">
+                    <a class="img" href="/blog/" style="background-image: url(/blog/assets/images/profile.png)">
+                    <span class="hidden">Mauricio Soares's Picture</span></a>
+                </figure>
+                <section class="author">
+                    <!-- Author Name -->
+                    <h4> Mauricio Soares </h4>
+                    <!-- Author Bio -->
+                    <p>
+                        Here goes the author description. You might want to place some links too in here
+                    </p>
+                </section>
+            
+
+            <!-- Share links section -->
+            <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=Objetos por referência&amp;url=http://mauriciosoares.co/blog/javascript/2015/01/02/objetos-por-referencia.html"
+        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://mauriciosoares.co/blog/javascript/2015/01/02/objetos-por-referencia.html"
+        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://mauriciosoares.co/blog/javascript/2015/01/02/objetos-por-referencia.html"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+            <!-- Disqus comments -->
+            
+
+        </footer>
+
+    </article>
+
+</main>
+
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="/blog/">Mauricio Soares</a> &copy;
+               &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll using
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
+
+    <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+</body>
+</html>

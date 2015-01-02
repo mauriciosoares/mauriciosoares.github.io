@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Mauricio Soares - Front End Developer</title>
+    <meta name="description" content="Mauricio Soares, Front End Developer" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/main.css" />
+
+</head>
+<body class="post-template">
+
+    <header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="/blog/">Home</a>
+        <a class="subscribe-button icon-feed" href="/blog/rss.xml">Subscribe</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Melhorando o callback hell</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-01-02">02 Jan 2015</time>
+                
+                    on javascript
+                
+            </section>
+        </header>
+
+<!--         <header class="post-header">
+            <a id="blog-logo" href="http://mauriciosoares.co/blog">
+                
+                    <span class="blog-title">Mauricio Soares</span>
+                
+            </a>
+        </header> -->
+
+        <!-- <span class="post-meta">
+            <time datetime="2015-01-02">02 Jan 2015</time>
+            
+                on javascript
+            
+        </span> -->
+
+        <!-- <h1 class="post-title">Melhorando o callback hell</h1> -->
+
+        <section class="post-content">
+            <p>Como eu melhorei o processo de ajax dinâmicos</p>
+
+<p>Creio que todo desenvolvedor front end ja passou pelo processo de lidar com ajax + jQuery... e sabe que isso pode virar uma bagunça sem fim...</p>
+
+<p>Um simples e inofensivo ajax:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://myurl.com&#39;</span><span class="p">,</span>
+  <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+  <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// callback</span>
+  <span class="p">}</span>
+<span class="p">})</span></code></pre></div>
+
+<p>Simples e objetivo, mas vamos supor que nosso código precise de mais de um ajax para validar um dado?</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://myurl.com&#39;</span><span class="p">,</span>
+  <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+  <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+      <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://myurl.com&#39;</span><span class="p">,</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+      <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// callback</span>
+      <span class="p">}</span>
+    <span class="p">})</span>
+  <span class="p">}</span>
+<span class="p">})</span></code></pre></div>
+
+<p>Mas podemos melhorar este processo usando promises... vejamos como...</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">req1</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="c1">// confs</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">req2</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="c1">// confs</span>
+<span class="p">});</span>
+
+<span class="nx">$</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="nx">req1</span><span class="p">,</span> <span class="nx">req2</span><span class="p">).</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">params1</span><span class="p">,</span> <span class="nx">params2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// callback</span>
+<span class="p">});</span></code></pre></div>
+
+<p>Fizemos com que as variáveis <code>req1</code> e <code>req2</code> recebesse a promise de cada requisição, e com o método $.when do jQuery fazemos um callback ser executado somente quando as 2 requisições estão prontas. YAY!</p>
+
+<p>Mas como meu mundo não é perfeito, eu passei por um desafio um pouco maior...</p>
+
+<p>1 - Os ajaxes que eu ia fazer já estavam implementados de uma maneira que não dava suporte a promises (fuck)
+2 - O número de requisições que eu ia fazer era dinâmica (mas padronizada), de maneira que poderia ser 1 ou 3 de uma vez.</p>
+
+<p>Meu cenario era o seguinte:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// cada metodo dentro de &quot;service&quot; era um ajax diferente</span>
+<span class="nx">service</span><span class="p">.</span><span class="nx">customAjax</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{});</span>
+<span class="nx">service</span><span class="p">.</span><span class="nx">customAjax2</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{});</span>
+<span class="nx">service</span><span class="p">.</span><span class="nx">customAjax3</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{});</span>
+
+<span class="c1">// depois que todos os ajaxes estavam prontos eu tinha que tratar os dados</span></code></pre></div>
+
+<p>Antes de mais nada, peguei todos os métodos ajax que eu precisava usar, e encapsulei cada um em um método meu, e criei uma estrutura que simulava as promises</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">metodo1</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">deferred</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+
+  <span class="nx">service</span><span class="p">.</span><span class="nx">customAjax</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">deferred</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="k">return</span> <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Calma calma, vamos por partes...</p>
+
+<p>A variável <code>deferred</code> nos ajuda a simular o efeito de uma promise... retornando <code>deferred.promise()</code> eu posso usar o <code>done</code> ou <code>when</code> do jQuery para tratar multiplos ajaxes</p>
+
+<p>Quando usamos <code>deferred.resolve(data)</code> dentro do resultado do ajax, nós estamos falando pra promise que retornamos que aquela promise foi concluida, e o parâmetro passado será o valor que essa promise retornará.</p>
+
+<p>Portanto a coisa ficou parecida com isso:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">methods</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nx">methods</span><span class="p">.</span><span class="nx">metodo1</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">deferred</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+
+  <span class="nx">service</span><span class="p">.</span><span class="nx">customAjax</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">deferred</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="k">return</span> <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nx">methods</span><span class="p">.</span><span class="nx">metodo2</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">deferred</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+
+  <span class="nx">service</span><span class="p">.</span><span class="nx">customAjax2</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">deferred</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="k">return</span> <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nx">methods</span><span class="p">.</span><span class="nx">metodo3</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">deferred</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+
+  <span class="nx">service</span><span class="p">.</span><span class="nx">customAjax3</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">deferred</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="k">return</span> <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Essa parte infelizmente tive que duplicar o código, mas como o numero limite de ajax era fixo, não vi muito problema.</p>
+
+<p>Agora precisamos fazer uma maneira de pegar o callback tanto de 1 requisição, quanto das 3...</p>
+
+<p>Primeiro criaremos um array com as promises de cada callback que quisermos usar... esse array será alimentado com alguma regra de negócio da sua aplicação...</p>
+
+<p>Depois usaremos o <a href="http://blog.herebecoders.com/js-como-funciona-o-call-e-o-apply/">apply</a> para chamar o método <code>$.when</code>, para termos quantas requisições forem necessárias</p>
+
+<p>E no callback de <code>$.when</code> usaremos a variável <a href="http://blog.herebecoders.com/js-dicas-sobre-javascript/">arguments</a> para pegarmos o retorno de cada callback.</p>
+
+<p>Como ficaria então um código com essa implementação</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Lógica para criar o array,</span>
+<span class="c1">// isso vai depender de qual é sua</span>
+<span class="c1">// regra de negocio</span>
+<span class="kd">var</span> <span class="nx">methodsToCall</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;metodo1&#39;</span><span class="p">,</span> <span class="s1">&#39;metodo2&#39;</span><span class="p">,</span> <span class="s1">&#39;metodo3&#39;</span><span class="p">],</span>
+  <span class="nx">promises</span> <span class="o">=</span> <span class="p">[];</span>
+
+<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">index</span> <span class="k">in</span> <span class="nx">methodsToCall</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// inserimos no array &quot;promises&quot; a promise de cada ajax</span>
+  <span class="nx">promises</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">methods</span><span class="p">[</span><span class="nx">index</span><span class="p">]());</span>
+<span class="p">}</span>
+
+<span class="c1">// depois de alimentarmos &quot;promises&quot;, chamamods o $.when usando apply</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">when</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">jQuery</span><span class="p">,</span> <span class="nx">promises</span><span class="p">).</span><span class="nx">done</span><span class="p">(</span><span class="nx">callback</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">callback</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// essa função só é chamada quando todas as 3 requisições forem concluídas</span>
+
+  <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">index</span> <span class="k">in</span> <span class="nx">arguments</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">item</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">index</span><span class="p">];</span>
+
+    <span class="c1">// trata o valor de &quot;item&quot;, que é o resultado de cada requisição</span>
+  <span class="p">}</span>
+<span class="p">};</span></code></pre></div>
+
+<p>Dessa maneira eu posso construir um array dinâmico com promises, e executa-los de uma vez só, sem precisar aninhar callback dentro de callback.</p>
+
+<p>Novamente, isso só funciona direito se seus ajaxes forem padronizados, se os valores que vc for pegar derem para tratar da mesma maneira como um todo...</p>
+
+<p>No meu caso, os ajaxes eram para validar se EMAIL e CPF eram válidos, portanto a resposta dos 2 eram iguais e eu conseguia trata-los da mesma maneira.</p>
+
+<p>Esse exemplo não se aplica para todas as vezes que você for usar ajax :)</p>
+
+        </section>
+
+        
+
+        <footer class="post-footer">
+            <!-- If we want to display author's name and bio -->
+            
+                <figure class="author-image">
+                    <a class="img" href="/blog/" style="background-image: url(/blog/assets/images/profile.png)">
+                    <span class="hidden">Mauricio Soares's Picture</span></a>
+                </figure>
+                <section class="author">
+                    <!-- Author Name -->
+                    <h4> Mauricio Soares </h4>
+                    <!-- Author Bio -->
+                    <p>
+                        Here goes the author description. You might want to place some links too in here
+                    </p>
+                </section>
+            
+
+            <!-- Share links section -->
+            <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=Melhorando o callback hell&amp;url=http://mauriciosoares.co/blog/javascript/2015/01/02/melhorando-o-callback-hell.html"
+        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://mauriciosoares.co/blog/javascript/2015/01/02/melhorando-o-callback-hell.html"
+        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://mauriciosoares.co/blog/javascript/2015/01/02/melhorando-o-callback-hell.html"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+            <!-- Disqus comments -->
+            
+
+        </footer>
+
+    </article>
+
+</main>
+
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="/blog/">Mauricio Soares</a> &copy;
+               &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll using
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
+
+    <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Mauricio Soares - Front End Developer</title>
+    <meta name="description" content="Mauricio Soares, Front End Developer" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/main.css" />
+
+</head>
+<body class="post-template">
+
+    <header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="/blog/">Home</a>
+        <a class="subscribe-button icon-feed" href="/blog/rss.xml">Subscribe</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">this em funções e construtores</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-01-02">02 Jan 2015</time>
+                
+                    on javascript
+                
+            </section>
+        </header>
+
+<!--         <header class="post-header">
+            <a id="blog-logo" href="http://mauriciosoares.co/blog">
+                
+                    <span class="blog-title">Mauricio Soares</span>
+                
+            </a>
+        </header> -->
+
+        <!-- <span class="post-meta">
+            <time datetime="2015-01-02">02 Jan 2015</time>
+            
+                on javascript
+            
+        </span> -->
+
+        <!-- <h1 class="post-title">this em funções e construtores</h1> -->
+
+        <section class="post-content">
+            <p>Um comportamento do Javascript é fazer com que o objeto <code>this</code> dentro de funções apontem para o objeto <code>window</code>.</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">teste</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">teste</span><span class="p">();</span> <span class="c1">// window</span></code></pre></div>
+
+<p>Isso acontece sempre que você chamar essa função da forma convencional, mas quando usamos funções como construtores esse comportamento é diferente...</p>
+
+<p>Em muitas linguagens de programação, é possível o uso de classes construtoras, no Javascript não existem classes (pelo menos até o Ecmascript 5), mas podemos simular essa situação;</p>
+
+<p>Vamos supor que tenhamos a classe Person, e queremos instanciar varias pessoas com essa classe, isso poderia ser adquirido da seguinte forma:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">Person</span><span class="p">()</span> <span class="p">{</span>
+
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">Weslley</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">Alan</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span></code></pre></div>
+
+<p>Dessa forma, <strong>Weslley</strong> e <strong>Alan</strong> receberão todos os métodos dentro de Person.</p>
+
+<p>Para podermos atribuir métodos e propriedades as instancias de Person, podemos usar o objeto <code>this</code>;</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">weslley</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="s1">&#39;Weslley&#39;</span><span class="p">);</span>
+<span class="nx">weslley</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span> <span class="c1">// Weslley</span>
+
+<span class="kd">var</span> <span class="nx">alan</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="s1">&#39;Alan&#39;</span><span class="p">);</span>
+<span class="nx">alan</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span> <span class="c1">// Alan</span></code></pre></div>
+
+<p>Dessa forma o objeto <code>this</code>, ao invés de apontar para o <code>window</code>, ele vai apontar para a propria variavel instanciada, no caso <code>alan</code> e <code>weslley</code>.</p>
+
+<p>O mesmo pode ser feit ocom métodos.</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">sayName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s1">&#39;Meu nome é &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">weslley</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="s1">&#39;Weslley&#39;</span><span class="p">);</span>
+<span class="nx">weslley</span><span class="p">.</span><span class="nx">sayName</span><span class="p">();</span> <span class="c1">// Meu nome é Weslley</span>
+
+<span class="kd">var</span> <span class="nx">alan</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="s1">&#39;Alan&#39;</span><span class="p">);</span>
+<span class="nx">alan</span><span class="p">.</span><span class="nx">sayName</span><span class="p">();</span> <span class="c1">// Meu nome é Alan</span></code></pre></div>
+
+<p>Mas temos um problema que não é bem visível nesse caso. O método <code>this.sayName</code> é exatamente igual para todas as instancias de Person, mas como ele é atribuido ao elemento instanciado (no caso <code>alan</code> e <code>weslley</code>) ele acaba sendo replicado todas as vezes que uma nova instancia é criada.</p>
+
+<p>Isso não parece ser muito importante, mas imaginem uma classe que crie 1000 instancias dela mesma, e assim o método <code>this.sayName</code> é replicado 1000 vezes, ai as coisas começam a complicar...</p>
+
+<p>E é ai que o <code>prototype</code> vem em ação! Leia o próximo post para saber umpouco mais sobre <code>prototype</code>.</p>
+
+        </section>
+
+        
+
+        <footer class="post-footer">
+            <!-- If we want to display author's name and bio -->
+            
+                <figure class="author-image">
+                    <a class="img" href="/blog/" style="background-image: url(/blog/assets/images/profile.png)">
+                    <span class="hidden">Mauricio Soares's Picture</span></a>
+                </figure>
+                <section class="author">
+                    <!-- Author Name -->
+                    <h4> Mauricio Soares </h4>
+                    <!-- Author Bio -->
+                    <p>
+                        Here goes the author description. You might want to place some links too in here
+                    </p>
+                </section>
+            
+
+            <!-- Share links section -->
+            <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=this em funções e construtores&amp;url=http://mauriciosoares.co/blog/javascript/2015/01/02/this-em-funcoes-e-construtores.html"
+        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://mauriciosoares.co/blog/javascript/2015/01/02/this-em-funcoes-e-construtores.html"
+        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://mauriciosoares.co/blog/javascript/2015/01/02/this-em-funcoes-e-construtores.html"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+            <!-- Disqus comments -->
+            
+
+        </footer>
+
+    </article>
+
+</main>
+
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="/blog/">Mauricio Soares</a> &copy;
+               &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll using
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
+
+    <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+</body>
+</html>
