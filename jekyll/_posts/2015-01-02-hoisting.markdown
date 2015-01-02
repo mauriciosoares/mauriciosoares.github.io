@@ -1,0 +1,108 @@
+---
+layout: post
+title:  "Hoisting?"
+date:   2015-01-02 20:00:00
+categories: Javascript
+---
+
+Um comportamento normal do Javascript que pode causar muita confusão na hora que você está desenvolvendo sua aplicação é o **Hoisting**.
+
+O Hoisting consiste em pegar variáveis e métodos que você declarou e organiza-los de forma que você não estava esperando... What?
+
+Por mais confuso que parece ser essa afirmação, é basicamente isso mesmo que ele faz... vamos ver abaixo um simples exemplo:
+
+{% highlight javascript %}
+teste(); // logs: Yeah
+
+function teste() {
+  console.log('Yeah');
+}
+{% endhighlight %}
+
+Nós executamos a função `teste` sem nem ao menos ela existir antes disso... Isso é causado por conta do Hoisting, que pega as funções e as coloca no começo de sua [closure](http://blog.herebecoders.com/js-closures-e-suas-utilidades/).
+
+Nota, isso só funciona dessa forma nas funções, e não quando atribuimos uma função a uma variável:
+
+{% highlight javascript %}
+teste(); // undefined is not a function
+
+var teste = function() {};
+{% endhighlight %}
+
+Mas ta ai mais um comportamento de Hoisting, se a função não existisse, ela retornaria um erro! o erro seria (no Chrome) `Uncaught ReferenceError: teste is not defined `, mas nesse caso ele falou que `undefined is not a function`, isso acontece porque o hoisting pegou nossa variável e jogou no começo do contexto, portanto a variável `teste` existe, só que ela ainda é `undefined`, e como o erro diz, `undefined is not a function`.
+
+Vamos pegar um exemplo mais claro:
+
+{% highlight javascript %}
+var teste = true;
+
+function hoisting() {
+  console.log(teste);
+  var teste = false;
+  console.log(teste);
+}
+
+hoisting();
+{% endhighlight %}
+
+Sem sabermos o que o hoisting faz, nossa lógica seria dizer que ao chamar a função `hoisting()`, o primeiro log retornaria `true`, e o segundo retornaria `false`; Mas ai é que você se engana, o retorno do primeiro log é `undefined` e do segundo é `false`. Vamos reescrever o código para vermos como ele ficaria por tras dos panos:
+
+{% highlight javascript %}
+var teste = true;
+
+function hoisting() {
+  var teste;
+  console.log(teste); // undefined
+  var teste = false;
+  console.log(teste); // false
+}
+
+hoisting();
+{% endhighlight %}
+
+Dentro de nossa closure, ao declaramos a variável `teste` dentro de `hoisting`, ela vai automáticamente para o começo de nossa função, só que sem receber seu valor. Logo o primeiro log busca a variável `teste` dentro de hoisting, que por sua vez é `undefined`, em seguida atribuimos um valor a `teste`, e então ela será `false`.
+
+Isso pode parecer bem maluco, mas precisamos entender bem esses gotchas do Javascript para não nos enrolarmos em nossas aplicações...
+
+Se nós não tivessemos declarado `teste` dentro da função `hoisting`, ai simela pegaria o valor que está fora da função, a variavel `teste` global:
+
+{% highlight javascript %}
+var teste = true;
+
+function hoisting() {
+  console.log(teste); // true
+  teste = false;
+  console.log(teste); // false
+}
+
+hoisting();
+
+console.log(teste); // false
+{% endhighlight %}
+
+Notemos que agora `teste` dentro de hoisting não está sendo declarado (com o uso do `var`), portanto o primeiro log busca o `teste` no escopo global, e quando fazemos `teste = false`, nós estamos alterando também o escopo global, ao darmos log em `teste` depois de `hoisting()`, o mesmo é `false` e não mais `true`.
+
+Dica: Sempre declare suas variáveis no começo de sua closure, para evitar problemas com hoisting:
+
+{% highlight javascript %}
+// Não é uma boa prática
+function teste() {
+  // muitos códigos
+
+    var abc = 123;
+
+    // mais muitos códigos
+}
+
+// Boa prática
+function teste() {
+    var abc;
+  // muitos códigos
+
+  abc = 123;
+
+    // mais muitos códigos
+}
+{% endhighlight %}
+
+Isso é basicamente um overview de como **hoisting** funciona, ainda existem mais algumas particularidades, mas definitivamente essas você precisa estar ciente, para não se dar mal no futuro.
